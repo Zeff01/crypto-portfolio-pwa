@@ -59,7 +59,7 @@ module.exports = {
           border: "#afafaf",
           destructive: "#FF2E2E",
           background: "#d3efe9",
-          darkbackground : "#233834"
+          darkbackground : "#292E2D",
           
         }
       },

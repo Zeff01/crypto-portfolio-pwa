@@ -6,7 +6,7 @@ export default function Signup() {
         <div className="w-screen pt-12 px-2 pe-10">
             <div className="flex flex-row items-center justify-center py-1">
                 <LogoSmall className="absolute left-1" />
-                <h2>Crypto Profit</h2>
+                <h2 className="translate-x-4">Crypto Profit</h2>
             </div>
             <SignupForm />
             <div className="flex flex-col items-center gap-y-2 text-sm">
