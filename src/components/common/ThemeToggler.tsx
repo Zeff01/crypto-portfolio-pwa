@@ -8,7 +8,7 @@ export default function ThemeToggler() {
 
     return (
         <Button 
-        variant={"outline"} 
+        variant={"ghost"} 
         size={'icon'} 
         className="p-2 bg-white dark:bg-custom-darkbackground  shadow-md rounded-full"
         onClick={toggleTheme}

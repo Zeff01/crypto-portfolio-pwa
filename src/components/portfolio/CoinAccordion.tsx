@@ -45,13 +45,13 @@ export default function CoinAccordion({imageURL, coinName, price, priceChange, i
                             <p>{priceChange}%</p>
                             </div>
                         </div>
-                        <div className="flex flex-col  justify-between gap-y-1">
-                            <Button variant={"ghost"} size={"icon"} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm">
+                        <div className="flex flex-col  justify-between gap-y-2">
+                            <div role="button" tabIndex={index+1} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3">
                                 <IoClose className="fill-custom-destructive" />
-                            </Button>
-                            <Button variant={"ghost"} size={"icon"} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm">
+                            </div>
+                            <div role="button" tabIndex={index*2} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3">
                                 <IoChevronForward className="stroke-custom-teal" />
-                            </Button>
+                            </div>
                         </div>
                     </div>
                 </div>

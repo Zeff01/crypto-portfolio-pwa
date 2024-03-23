@@ -7,6 +7,7 @@ import Signup from "./pages/Signup"
 import Signin from "./pages/Signin"
 import Home from "./pages/Home"
 import Search from "./pages/Search"
+import Test from "./pages/Test"
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -14,12 +15,12 @@ const router = createBrowserRouter(
             <Route path="" element={<Main />}>
                 <Route path="portfolio" element={<Portfolio />} />
                 <Route index element={<Home />} />
-            </Route>
-            {/* this route is temporary */}
-            <Route path="loading" element={<Loading />} />
+            </Route>            
+            <Route path="loading" element={<Loading />} /> {/* this route is temporary */}
             <Route path="signup" element={<Signup />} />
             <Route path="signin" element={<Signin />} />
             <Route path="search" element={<Search />} />
+            <Route path="test" element={<Test />} />
         </Route>
     )
 )

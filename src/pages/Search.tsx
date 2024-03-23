@@ -28,7 +28,7 @@ export default function Search() {
                     return (
                         <AlertDialog key={s.imageURL}>
                             <AlertDialogTrigger asChild>
-                                <div className="flex flex-row gap-x-4 items-center" role="button">
+                                <div className="flex flex-row gap-x-4 items-center" role="button" tabIndex={2}>
                                     <div className="w-[36px] h-[36px] bg-slate-400 shadow-sm rounded-full">
                                     </div>
                                     <p>{s.coinSymbol}</p>
