@@ -12,7 +12,7 @@ export default function Main() {
                     <div>
                         <img src="./icon.svg" />
                     </div>
-                    <p className="text-xl font-semibold">Crypto Profit</p>
+                    <p className="text-xl font-[500] text-custom-black dark:text-custom-white">Crypto Profit</p>
                 </div>
                 <div className="flex flex-row items-center text-xl gap-x-2">
                     <ThemeToggler />

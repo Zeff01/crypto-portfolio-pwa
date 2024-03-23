@@ -59,8 +59,8 @@ module.exports = {
           border: "#afafaf",
           destructive: "#FF2E2E",
           background: "#d3efe9",
-          darkbackground : "#292E2D",
-          
+          darkbackground : "#233834",
+          card: "#232726"                    
         }
       },
       borderRadius: {

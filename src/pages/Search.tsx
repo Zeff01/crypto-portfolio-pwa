@@ -19,7 +19,7 @@ export default function Search() {
             <div className="relative w-full h-fit">
                 <Input 
                 type="text" placeholder="Search..." 
-                className="px-6 h-14 rounded-full"
+                className="px-6 h-14 rounded-full border border-transparent dark:border-gray-700"
                 />
                 <CiSearch className="absolute top-1/2 right-4 -translate-y-1/2 text-2xl fill-custom-teal" />
             </div>
@@ -40,13 +40,18 @@ export default function Search() {
                                 </AlertDialogHeader>
                                 <div className="relative w-full h-fit">
                                     <Input 
-                                    type="text" placeholder="Search..." 
-                                    className="px-6 h-14 rounded-full"
+                                    type="number" placeholder="Search..." 
+                                    min={0}
+                                    className="text-lg px-6 h-16 rounded-full"
                                     />
                                 </div>
                                 <AlertDialogFooter className="flex flex-row items-center justify-between font-[500]">
-                                <AlertDialogAction className="w-[45%] translate-y-1 rounded-full bg-custom-teal text-custom-black">Continue</AlertDialogAction>
-                                <AlertDialogCancel className="w-[45%] rounded-full bg-custom-darkbackground text-custom-white">Cancel</AlertDialogCancel>
+                                <AlertDialogAction className="w-[45%] translate-y-1 rounded-full bg-custom-teal text-custom-black hover:bg-custom-teal shadow-md">
+                                    Continue
+                                </AlertDialogAction>
+                                <AlertDialogCancel className="w-[45%] rounded-full bg-custom-card text-custom-white dark:bg-custom-card hover:bg-custom-card hover:text-custom-white shadow-md">
+                                    Cancel
+                                </AlertDialogCancel>
                                 </AlertDialogFooter>
                             </AlertDialogContent>
                         </AlertDialog>
