@@ -4,7 +4,7 @@ export default function Root() {
 
 
     return (
-        <div className="px-2 w-screen h-screen">
+        <div className="h-screen">
             <Outlet />
         </div>
     )
