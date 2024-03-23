@@ -19,15 +19,15 @@ export default function SignupForm() {
                     <Form className="flex flex-col gap-2 pt-4 pb-2">
                         <div className="flex flex-col h-[71px] justify-between">
                             <label className="text-sm">First Name</label>
-                            <Field name="firstName" className="border-b border-custom-border py-1 px-2 bg-transparent" placeholder="first name" />
+                            <Field name="firstName" className="border-b border-custom-border py-1 px-2 bg-transparent" placeholder="first name..." />
                         </div> 
                         <div className="flex flex-col h-[71px] justify-between">
                             <label className="text-sm">Last Name</label>
-                            <Field name="lastName" className="border-b border-custom-border py-1 px-2 bg-transparent" placeholder="last name" />
+                            <Field name="lastName" className="border-b border-custom-border py-1 px-2 bg-transparent" placeholder="last name..." />
                         </div>
                         <div className="flex flex-col h-[71px] justify-between">
                             <label className="text-sm">Username</label>
-                            <Field name="username" className="border-b border-custom-border py-1 px-2 bg-transparent" placeholder="username" />
+                            <Field name="username" className="border-b border-custom-border py-1 px-2 bg-transparent" placeholder="username..." />
                         </div>
                         <div className="flex flex-col h-[71px] justify-between">
                             <label className="text-sm">Email</label>

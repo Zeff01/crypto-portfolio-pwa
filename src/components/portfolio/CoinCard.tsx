@@ -11,7 +11,7 @@ type CoinType = {
 export default function CoinCard({imageURL, coinName, price, priceChange, index}:CoinType) {
     return (
         <div className={`basis-1/2 pb-2 ${index%2===0?"pe-2":""} overflow-x-scroll`}>
-            <div className="bg-custom-white dark:bg-custom-card rounded-lg shadow-md p-4 pr-1 flex flex-col justify-between font-[500] h-[120px] border border-transparent dark:border-gray-700">
+            <div className="bg-custom-white dark:bg-custom-card rounded-lg shadow-md p-4 pr-1 flex flex-col justify-between font-[500] h-[120px]">
                 <div className="flex flex-row items-center gap-x-2 ">
                     <div className="w-[20px] h-[20px] bg-slate-400 shadow-sm rounded-full">
                     </div>

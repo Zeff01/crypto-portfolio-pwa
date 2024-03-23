@@ -60,7 +60,8 @@ module.exports = {
           destructive: "#FF2E2E",
           background: "#d3efe9",
           darkbackground : "#233834",
-          card: "#232726"                    
+          card: "#232726",
+          icongray: "#F2F2F2"
         }
       },
       borderRadius: {

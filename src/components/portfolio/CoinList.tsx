@@ -1,18 +1,38 @@
 import Controls from "./Controls";
 import CoinCard from "./CoinCard";
+import { useState } from "react";
+import CoinAccordion from "./CoinAccordion";
+import { Accordion } from "../ui/accordion";
 
 export  default function CoinList() {
+    const [listType, setListType] = useState<'card'|'accordion'>('card')
+
+    function toggleListType() {
+        setListType(t => t === 'card' ? 'accordion' :  'card')
+    }
+
     return (
         <section className="py-4 flex flex-col gap-y-4">
-            <Controls />
+            <Controls  listType={listType}  toggleListType={toggleListType} />
+            { 
+            listType === 'card' ? 
             <div className="flex flex-row flex-wrap">
                 {portfolioCoins.map((p,i) => {
                     return (
                         // NOTE: index is used here for padding
                         <CoinCard key={p.imageURL} {...p} index={i} />
                     )
+                })}            
+            </div> :
+            <Accordion type="single" collapsible className="w-full">
+            {portfolioCoins.map((p,i) => {
+                return (
+                    // NOTE: index is used here for padding
+                    <CoinAccordion key={p.imageURL} {...p} index={i} />
+                    )
                 })}
-            </div>
+            </Accordion>
+            }
         </section>
     )
 }
