@@ -57,7 +57,10 @@ module.exports = {
           teal: "#02F5C3",
           text: "#b4b4b4",
           border: "#afafaf",
-          destructive: "#FF2E2E"
+          destructive: "#FF2E2E",
+          background: "#d3efe9",
+          darkbackground : "#233834"
+          
         }
       },
       borderRadius: {

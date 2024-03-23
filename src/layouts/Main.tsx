@@ -1,8 +1,8 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { HiHome } from "react-icons/hi2";
 import { FaBriefcase } from "react-icons/fa";
-import { RxHamburgerMenu } from "react-icons/rx";
 import ThemeToggler from "@/components/common/ThemeToggler";
+import Settings from "@/components/common/Settings";
 
 export default function Main() {
     return (
@@ -16,9 +16,7 @@ export default function Main() {
                 </div>
                 <div className="flex flex-row items-center text-xl gap-x-2">
                     <ThemeToggler />
-                    <div>
-                        <RxHamburgerMenu />
-                    </div>
+                    <Settings />
 
                 </div>
             </nav>
