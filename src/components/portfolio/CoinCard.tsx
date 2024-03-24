@@ -8,7 +8,7 @@ type CoinType = {
     index: number
 }
 
-export default function CoinCard({imageURL, coinName, price, priceChange, index}:CoinType) {
+export default function CoinCard({/**imageURL*/ coinName, price, priceChange, index}:CoinType) {
     return (
         <div className={`basis-1/2 pb-2 ${index%2===0?"pe-2":""} overflow-x-scroll`}>
             <div className="bg-custom-white dark:bg-custom-card rounded-lg shadow-md p-4 pr-1 flex flex-col justify-between font-[500] h-[120px]">

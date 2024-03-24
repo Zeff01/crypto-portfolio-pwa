@@ -15,7 +15,7 @@ export default function SignupForm() {
         <div className="py-2 ">
             <h1 className="text-2xl font-[500]">Register</h1>
             <Formik initialValues={initialValues} onSubmit={()=>{}}>
-                {(props) => (
+                {() => (
                     <Form className="flex flex-col gap-2 pt-4 pb-2">
                         <div className="flex flex-col h-[71px] justify-between">
                             <label className="text-sm">First Name</label>

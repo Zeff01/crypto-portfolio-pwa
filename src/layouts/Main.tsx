@@ -3,10 +3,22 @@ import { HiHome } from "react-icons/hi2";
 import { FaBriefcase } from "react-icons/fa";
 import ThemeToggler from "@/components/common/ThemeToggler";
 import Settings from "@/components/common/Settings";
+import { useRef } from "react";
+import { motion } from 'framer-motion'
 
 export default function Main() {
+    const settingsRef = useRef<HTMLButtonElement>(null)
+
     return (
-        <div className="h-full w-full flex flex-col">
+        <motion.div
+        onPanStart={(e) => {
+            const x = e.clientX
+            if (x < 30) {
+                settingsRef.current?.click()
+            }
+        }}
+        className="h-full w-full flex flex-col"
+        >
             <nav className="bg-custom-background dark:bg-custom-darkbackground z-10 h-12 px-2 py-8 w-full flex flex-row justify-between shadow-sm">
                 <div className="flex flex-row items-center">
                     <div>
@@ -16,7 +28,7 @@ export default function Main() {
                 </div>
                 <div className="flex flex-row items-center text-xl gap-x-2">
                     <ThemeToggler />
-                    <Settings />
+                    <Settings ref={settingsRef} />
 
                 </div>
             </nav>
@@ -37,6 +49,6 @@ export default function Main() {
                     <p>Portfolio</p>
                 </NavLink>
             </nav>
-        </div>
+        </motion.div>
     )
 }

@@ -5,19 +5,20 @@ import { LiaSignOutAltSolid } from "react-icons/lia";
 
 import {
     Drawer,
-    DrawerClose,
+    // DrawerClose,
     DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
+    // DrawerDescription,
+    // DrawerFooter,
+    // DrawerHeader,
+    // DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
+import { ForwardedRef, forwardRef } from "react";
 
-export default function Settings() {
+export default forwardRef(function Settings(_,ref:ForwardedRef<HTMLButtonElement>) {
     return (
         <Drawer direction="left">
-            <DrawerTrigger>
+            <DrawerTrigger ref={ref}>
                 <RxHamburgerMenu />
             </DrawerTrigger>
             <DrawerContent className="flex flex-col w-[300px] h-screen rounded-none">
@@ -65,4 +66,4 @@ export default function Settings() {
             </DrawerContent>
         </Drawer>
     )
-}
+})

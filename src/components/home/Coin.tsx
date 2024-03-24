@@ -6,7 +6,7 @@ type TrendingCoinType = {
     priceChange: number;
 }
 
-export default function Coin({imageURL, coinName, price, priceChange}:TrendingCoinType) {
+export default function Coin({/**imageURL**/ coinName, price, priceChange}:TrendingCoinType) {
     return (
         <div className="bg-custom-white dark:bg-custom-card min-w-[200px] rounded-md shadow-md px-5 py-4 border border-transparent dark:border-gray-700">
             <div className="flex  flex-row gap-x-4 items-center">
