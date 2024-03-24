@@ -16,7 +16,7 @@ export default function Latest() {
                     </div>
                 </div>
             </div>
-            <div className="basis-1/2  pe-3 pb-3">
+            <div className="basis-1/2  pb-3">
                 <div className="bg-custom-white dark:bg-custom-darkbackground h-[123px] rounded-lg shadow-md p-4 flex flex-col justify-between border border-transparent dark:border-gray-700">
                     <div className="flex flex-col gap-y-2">
                         <p className="text-custom-text  font-[500] text-sm">BTC Dominance</p>
@@ -41,7 +41,7 @@ export default function Latest() {
                     </div>
                 </div>
             </div>
-            <div className="basis-1/2  pe-3 pb-3">
+            <div className="basis-1/2 pb-3">
                 <div className="bg-custom-white dark:bg-custom-darkbackground h-[123px] rounded-lg shadow-md p-4 flex flex-col justify-between border border-transparent dark:border-gray-700">
                     <div className="flex flex-col gap-y-2">
                         <p className="text-custom-text  font-[500] text-sm">Fear % Greed</p>

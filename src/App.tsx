@@ -8,6 +8,7 @@ import Signin from "./pages/Signin"
 import Home from "./pages/Home"
 import Search from "./pages/Search"
 import Test from "./pages/Test"
+import AppLoading from "./components/common/AppLoading"
 
 const router = createBrowserRouter(
     createRoutesFromElements(

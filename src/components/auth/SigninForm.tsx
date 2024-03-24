@@ -48,11 +48,11 @@ export default function SigninForm() {
                     <Form className="flex flex-col gap-2 pt-4 pb-2">
                         <div className="flex flex-col h-[71px] justify-between">
                             <label className="text-sm dark:text-custom-text">Email</label>
-                            <Field name="email" className="border-b border-custom-border py-1 px-2 bg-transparent" />
+                            <Field type="text" name="email" className="border-b border-custom-border py-1 px-2 bg-transparent" />
                         </div> 
                         <div className="flex flex-col h-[71px] justify-between">
                             <label className="text-sm dark:text-custom-text">Password</label>
-                            <Field name="password" className="border-b border-custom-border py-1 px-2 bg-transparent" />
+                            <Field type="password" name="password" className="border-b border-custom-border py-1 px-2 bg-transparent" />
                         </div>    
                         <p className="pt-10 text-sm dark:text-custom-text">Forgot?</p>
                         <div className="flex justify-center pt-6">

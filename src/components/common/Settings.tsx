@@ -13,9 +13,37 @@ import {
     // DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
-import { ForwardedRef, forwardRef } from "react";
+import { ForwardedRef, forwardRef, useEffect, useState } from "react";
+import { userUserData } from "@/hooks/useUserData";
+import axios from "axios";
+import { API_URL } from "@/contants/environment";
 
 export default forwardRef(function Settings(_,ref:ForwardedRef<HTMLButtonElement>) {
+    const userData = userUserData(s => s.userData)
+    const [userInfos, setUserInfos] = useState({
+        firstName: ' ', 
+        lastName: ' ', 
+        username: '',
+        email: 'user not signed in'
+    }, )
+
+    async function getUserInfo() {
+        const jwt = userData?.session?.access_token
+        const id = userData?.user?.id
+        if (!jwt || !id) return null;
+        try {
+            const res = await axios.get(`${API_URL}/api/profile/userinfo/${id}`, {headers: {'Authorization': `Bearer ${jwt}`}})
+            setUserInfos(res.data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+
+    useEffect(() => {
+        getUserInfo()
+    }, [userData])
+
     return (
         <Drawer direction="left">
             <DrawerTrigger ref={ref}>
@@ -24,11 +52,14 @@ export default forwardRef(function Settings(_,ref:ForwardedRef<HTMLButtonElement
             <DrawerContent className="flex flex-col w-[300px] h-screen rounded-none">
                <div className="px-6 border-b border-custom-text dark:border-gray-800 flex flex-col gap-y-2 py-6">
                     <p className="text-sm dark:text-custom-teal">Personal Account</p>
-                    <div className="w-[70px] aspect-square rounded-full bg-custom-black  flex flex-col items-center justify-center">
-                        <p className="text-custom-white font-[500] text-2xl">JS</p>
+                    <div className={`${userData? "opacity-100" : "opacity-0"} w-[70px] aspect-square rounded-full bg-custom-black  flex flex-col items-center justify-center`}>
+                        <p className="text-custom-white font-[500] text-2xl">
+                            {userInfos.firstName[0].toUpperCase()}
+                            {userInfos.lastName[0].toUpperCase()}
+                        </p>
                     </div>
-                    <p className="font-[500] text-2xl">Jzeff Somera</p>
-                    <p className="text-custom-text">Jzeff@gmail.com</p>
+                    <p className="font-[500] text-2xl">{userInfos.firstName}&nbsp;{userInfos.lastName}</p>
+                    <p className="text-custom-text">{userInfos.email}</p>
                </div>
                <div className="px-6 py-12 flex-grow flex flex-col justify-between">
                     <div className="flex flex-col gap-y-4">
