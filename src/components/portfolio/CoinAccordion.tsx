@@ -1,7 +1,6 @@
 import { IoChevronUp, IoChevronDown, IoClose , IoChevronForward } from "react-icons/io5";
 import { AccordionItem, AccordionTrigger, AccordionContent } from "../ui/accordion";
 import { RiCoinLine } from "react-icons/ri";
-import { Button } from "../ui/button";
 
 type CoinType = {
     imageURL: string;
@@ -18,11 +17,11 @@ export default function CoinAccordion({imageURL, coinName, price, priceChange, i
         >
             <AccordionTrigger>
                 <div className="w-screen pe-10 font-[500] text-sm"> {/**<--- this styles is needed for horizontal scrollbar when overflowing */}
-                    <div className="bg-white dark:bg-custom-card w-full h-full p-4 pr-2 flex flex-row gap-x-4 overflow-x-scroll justify-between shadow-md rounded-md">
-                        <div className="flex flex-col items-center justify-between">
+                    <div className="bg-white dark:bg-custom-card w-full h-full py-4 px-2 flex flex-row gap-x-4 overflow-x-scroll justify-between shadow-md rounded-md">
+                        <div className="w-[80px] flex flex-col items-center justify-between">
                             <div className="w-[50px] h-[50px] bg-slate-400 shadow-sm rounded-full">
                             </div>
-                            <p className="text-base justify-self-end">{coinName}</p>
+                            <p className="justify-self-end">{coinName}</p>
                         </div>
                         <div className="flex flex-col justify-between py-3 items-start">
                             <p className="flex flex-row gap-1 items-baseline">

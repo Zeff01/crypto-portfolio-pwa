@@ -9,13 +9,21 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-  import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { ForwardedRef, forwardRef } from "react"
 
-export default function InvalidCredentialsModal() {
+  
+export default forwardRef(function InvalidCredentialsModal({className}:{className?:string},ref?:ForwardedRef<HTMLButtonElement>) {
     return (
         <AlertDialog>
-            <AlertDialogTrigger asChild>
-                <Button variant="outline">Show Dialog</Button>
+            <AlertDialogTrigger asChild   ref={ref}>
+                <Button 
+                variant="outline" 
+                className={cn(className)}
+                >
+                    Show Dialog
+                </Button>
             </AlertDialogTrigger>
             <AlertDialogContent className="bg-custom-white dark:bg-custom-black">
                 <AlertDialogHeader>
@@ -30,4 +38,4 @@ export default function InvalidCredentialsModal() {
             </AlertDialogContent>
         </AlertDialog>
     )
-}
+})
