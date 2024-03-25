@@ -1,14 +1,17 @@
 import { Outlet } from "react-router-dom";
-import ThemeProvider from "./ThemeProvider";
+import AppLoading from "@/components/common/AppLoading";
+import { useAuthContext } from "@/providers/AuthProvider";
 
 export default function Root() {
-
+    const { appLoading } = useAuthContext()
 
     return (
-        <ThemeProvider>
-            <div className="h-screen">
+        <div className="h-screen">
+            {
+                appLoading ?
+                <AppLoading /> :
                 <Outlet />
-            </div>
-        </ThemeProvider>
+            }
+        </div>
     )
 }

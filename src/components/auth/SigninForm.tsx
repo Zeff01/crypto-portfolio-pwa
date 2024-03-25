@@ -1,12 +1,11 @@
 import { Formik, Form, Field, } from "formik"
 import Button from "../common/Button"
-import { API_URL } from "@/contants/environment"
-import axios from "axios"
 import InvalidCredentialsModal from "./InvalidCredentialsModa"
 import { useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { userUserData } from "@/hooks/useUserData"
 import { User, Session } from '@supabase/supabase-js'
+import { AuthFetch } from "@/queries"
 import * as yup from 'yup'
 
 export default function SigninForm() {
@@ -25,10 +24,11 @@ export default function SigninForm() {
         password: yup.string().min(1, '*must not be empty').required('*required')
     })
 
-    async function login(values: typeof initialValues) {
-        console.log(values)
+    async function login({email, password}: typeof initialValues) {
+        console.log({email, password})
         try {
-            const res = await axios.post(`${API_URL}/api/auth/login`, values)
+            // const res = await axios.post(`${API_URL}/api/auth/login`, values)
+            const res = await AuthFetch.login({email,password})
             if (res.status === 200) {
                 const data : {user: User, session:Session} = res.data
                 save(data)

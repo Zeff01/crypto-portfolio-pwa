@@ -17,9 +17,13 @@ import { ForwardedRef, forwardRef, useEffect, useState } from "react";
 import { userUserData } from "@/hooks/useUserData";
 import axios from "axios";
 import { API_URL } from "@/contants/environment";
+import { AuthFetch } from "@/queries";
+import { useNavigate } from "react-router-dom";
 
 export default forwardRef(function Settings(_,ref:ForwardedRef<HTMLButtonElement>) {
+    const navigate = useNavigate()
     const userData = userUserData(s => s.userData)
+    const remove = userUserData(s => s.remove)
     const [userInfos, setUserInfos] = useState({
         firstName: ' ', 
         lastName: ' ', 
@@ -34,6 +38,18 @@ export default forwardRef(function Settings(_,ref:ForwardedRef<HTMLButtonElement
         try {
             const res = await axios.get(`${API_URL}/api/profile/userinfo/${id}`, {headers: {'Authorization': `Bearer ${jwt}`}})
             setUserInfos(res.data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    async function logout() {
+        try {
+            const res = await AuthFetch.signout()
+            if (res.status === 200) {
+                remove()
+                navigate('/signin')
+            }
         } catch (error) {
             console.error(error)
         }
@@ -89,7 +105,12 @@ export default forwardRef(function Settings(_,ref:ForwardedRef<HTMLButtonElement
                                 <LiaSignOutAltSolid className="fill-custom-black dark:fill-custom-teal" />
                             </div>
 
-                            <p>Sign Out</p>
+                            <p role="button" 
+                            tabIndex={5}
+                            onClick={logout}
+                            >
+                                Sign Out
+                            </p>
                         </div>
                     </div>
                     <p className="dark:text-custom-teal">Terms and Conditions</p>

@@ -24,7 +24,7 @@ class AuthQuery {
     }
 
     async refresh(session:Session) {
-        const res = await  axios.post(`${API_URL}/api/auth/refresh`, session)
+        const res = await  axios.post(`${API_URL}/api/auth/refresh`, {session})
         return res
     }
 

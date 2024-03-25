@@ -8,7 +8,10 @@ import Signin from "./pages/Signin"
 import Home from "./pages/Home"
 import Search from "./pages/Search"
 import Test from "./pages/Test"
-import AppLoading from "./components/common/AppLoading"
+
+// providers
+import ThemeProvider from "./providers/ThemeProvider"
+import AuthProvider from "./providers/AuthProvider"
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -28,7 +31,11 @@ const router = createBrowserRouter(
 
 function App() {
     return (
-        <RouterProvider router={router} />
+        <AuthProvider>
+            <ThemeProvider>
+                <RouterProvider router={router} />
+            </ThemeProvider>
+        </AuthProvider>
     )
 }
 

@@ -1,5 +1,6 @@
 import LogoSmall from "@/components/common/LogoSmall";
 import SigninForm from "@/components/auth/SigninForm";
+import { Link } from "react-router-dom";
 
 export default function Signin() {
     return (
@@ -12,6 +13,7 @@ export default function Signin() {
             <div className="flex flex-col items-center gap-y-2 text-sm">
                 <p className="text-custom-text">Don’t Have an Account Yet?</p>
                 <p className="text-custom-black dark:text-custom-teal">Create Account   </p>
+                <Link to="/" className="pb-6 text-custom-text underline">Back to home</Link>
             </div>
         </div>
     )

@@ -1,7 +1,7 @@
 
 export default function AppLoading() {
     return (
-        <div className="pb-36 flex flex-col items-center">
+        <div className="translate-y-20 pb-36 flex flex-col items-center">
             <svg width="60" height="68" viewBox="0 0 60 68" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 29.6038V20.5472L24.2453 25.7358L33.6792 20.5472V29.6038L24.2453 35.0755L15 29.6038Z" fill="#02F5C3"/>
                 <path d="M15 54.3208V33L23.2075 37.6226V59.5094L15 54.3208Z" fill="#02F5C3"/>

@@ -1,6 +1,6 @@
 import { Button } from "../ui/button";
 import { GoEye } from "react-icons/go";
-import { useGlobalTheme } from "@/layouts/ThemeProvider";
+import { useGlobalTheme } from "@/providers/ThemeProvider";
 
 export default function ThemeToggler() {
     const { toggleTheme } = useGlobalTheme()
