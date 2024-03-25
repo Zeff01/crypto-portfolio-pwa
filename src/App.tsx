@@ -13,12 +13,15 @@ import Test from "./pages/Test"
 import ThemeProvider from "./providers/ThemeProvider"
 import AuthProvider from "./providers/AuthProvider"
 
+// loaders
+import { homeLoader } from "./loaders/homeLoader"
+
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="" element={<Root />}>
             <Route path="" element={<Main />}>
                 <Route path="portfolio" element={<Portfolio />} />
-                <Route index element={<Home />} />
+                <Route index element={<Home />} loader={homeLoader} />
             </Route>            
             <Route path="loading" element={<Loading />} /> {/* this route is temporary */}
             <Route path="signup" element={<Signup />} />
