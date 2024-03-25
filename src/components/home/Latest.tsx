@@ -40,7 +40,7 @@ export default function Latest({globalMetrics}:LatestProps) {
                     <div className="flex flex-col gap-y-2">
                         <p className="text-custom-text  font-[500] text-sm">Market Cap</p>
                         <p>
-                            <span className="font-semibold text-2xl">{formatNumber(total_market_cap)}</span>
+                            <span className="font-semibold text-2xl">{formatNumber(total_market_cap)}&nbsp;</span>
                             <span className="text-custom-text  font-[500] text-[10px]">USD</span>
                         </p>
                     </div>
@@ -65,7 +65,7 @@ export default function Latest({globalMetrics}:LatestProps) {
                     <div className="flex flex-col gap-y-2">
                         <p className="text-custom-text  font-[500] text-sm">Volume</p>
                         <p>
-                            <span className="font-semibold text-2xl">{formatNumber(total_volume_24h)}</span>
+                            <span className="font-semibold text-2xl">{formatNumber(total_volume_24h)}&nbsp;</span>
                             <span className="text-custom-text  font-[500] text-[10px]">USD</span>
                         </p>
                     </div>
