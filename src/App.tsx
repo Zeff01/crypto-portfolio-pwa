@@ -17,11 +17,14 @@ import AuthProvider from "./providers/AuthProvider"
 import { homeLoader } from "./loaders/homeLoader"
 import { profileLoader } from "./loaders/profileLoader"
 
+// actions
+import { profileAction } from "./actions/profileAction"
+
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="" element={<Root />}>
             <Route path="" element={<Main />}>
-                <Route path="portfolio" element={<Portfolio />} loader={profileLoader} />
+                <Route path="portfolio" element={<Portfolio />} loader={profileLoader} action={profileAction} />
                 <Route index element={<Home />} loader={homeLoader} />
             </Route>            
             <Route path="loading" element={<Loading />} /> {/* this route is temporary */}

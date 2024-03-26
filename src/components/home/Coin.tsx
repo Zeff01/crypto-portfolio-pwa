@@ -11,6 +11,8 @@ export default function Coin({name, quote}:CoinProps) {
 
     const { price, percent_change_24h } = quote?.USD
     
+    const formattedPrice = price < 1 ? price.toFixed(9) : safeToFixed(price)
+
 
 
     return (
@@ -20,7 +22,7 @@ export default function Coin({name, quote}:CoinProps) {
                 </div>
                 <div className="font-[500]">
                     <p>{name}</p>
-                    <p>${safeToFixed(price)}</p>
+                    <p>${formattedPrice}</p>
                 </div>
             </div>
             <div>
