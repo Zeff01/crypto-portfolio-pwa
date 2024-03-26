@@ -1,18 +1,25 @@
 import { IoChevronUp, IoChevronDown } from "react-icons/io5";
 import { PortfolioItem } from "@/types";
 import { safeToFixed } from "@/lib/helpers";
+import { useNavigate } from "react-router-dom";
 
 interface CoinCardProps extends PortfolioItem  {
     index: number
 } 
 
-export default function CoinCard({/**imageURL*/ coinName, currentPrice, priceChangePercentage, index, coinImage}:CoinCardProps) {
+export default function CoinCard( {coinId, coinName, currentPrice, priceChangePercentage, index, coinImage}:CoinCardProps) {
+    const  navigate = useNavigate()
 
     const price = currentPrice < 1 ? currentPrice.toFixed(9) : safeToFixed(currentPrice)
 
     return (
         <div className={`basis-1/2 pb-2 ${index%2===0?"pe-2":""} overflow-x-scroll`}>
-            <div className="bg-custom-white dark:bg-custom-card rounded-lg shadow-md p-4 pr-1 flex flex-col justify-between font-[500] h-[120px]">
+            <div 
+            className="bg-custom-white dark:bg-custom-card rounded-lg shadow-md p-4 pr-1 flex flex-col justify-between font-[500] h-[120px]"
+            role="button"
+            tabIndex={index+2}
+            onClick={() => navigate(`${coinId}`)}
+            >
                 <div className="flex flex-row items-center gap-x-2 ">
                     <div className="w-[20px] h-[20px] bg-slate-400 shadow-sm rounded-full overflow-hidden">
                         <img src={coinImage} width={20} height={20} />

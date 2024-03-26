@@ -25,6 +25,13 @@ class ProfileQuery {
         })
         return res
     }
+    //                                                the coinId becomes a string because it will be retrieved from the params
+    async getPortfolioCoinData(id:string, jwt:string, coinId: string) {
+        const res = await axios.get(`${API_URL}/api/profile/data/${id}/${coinId}`, {
+            headers: {Authorization: `Bearer ${jwt}`}
+        })        
+        return res
+    }
 
     async getUserInfo(id:string, jwt:string,) {
         const res = await axios.get(`${API_URL}/api/profile/userinfo/${id}`, {

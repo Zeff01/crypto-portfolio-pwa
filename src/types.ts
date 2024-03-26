@@ -122,4 +122,6 @@ export interface PortfolioItem {
     orderIndex: number | null;
     coinSymbol: string;
     coinDescription: string;
+    mustOwnShares: number;
+    sharesMissing: number;
 }

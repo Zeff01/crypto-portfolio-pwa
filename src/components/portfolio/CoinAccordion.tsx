@@ -2,6 +2,7 @@ import { IoChevronUp, IoChevronDown, IoClose , IoChevronForward } from "react-ic
 import { PortfolioItem } from "@/types";
 import { safeToFixed } from "@/lib/helpers";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
+import { useNavigate } from "react-router-dom";
 
 
 interface CoinAccordionProps extends PortfolioItem {
@@ -9,12 +10,14 @@ interface CoinAccordionProps extends PortfolioItem {
 }
 
 
-export default function CoinAccordion({id, coinImage, coinName, currentPrice, priceChangePercentage, index}:CoinAccordionProps) {
+export default function CoinAccordion({coinId, coinImage, coinName, currentPrice, priceChangePercentage, index}:CoinAccordionProps) {
     const exchangeRate = useExchangeRate(s => s.exchangeRate)
 
     const price = currentPrice < 1 ? currentPrice.toFixed(9) : safeToFixed(currentPrice)    
     const phpCurrentPrice = currentPrice * exchangeRate
     const phpPrice = phpCurrentPrice < 1 ? phpCurrentPrice.toFixed(9) : safeToFixed(phpCurrentPrice)
+
+    const navigate = useNavigate()
     
 
     return (
@@ -22,9 +25,14 @@ export default function CoinAccordion({id, coinImage, coinName, currentPrice, pr
         >
             <div>
                 <div className="w-screen pe-10 font-[500] text-sm"> {/**<--- this styles is needed for horizontal scrollbar when overflowing */}
-                    <div className="bg-white dark:bg-custom-card w-full h-full py-4 px-2 flex flex-row gap-x-4 overflow-x-scroll justify-between shadow-md rounded-md">
+                    <div className="bg-white dark:bg-custom-card w-full h-full py-4 px-2 flex flex-row gap-x-4 overflow-x-scroll justify-between shadow-md rounded-md"
+                    role="button"
+                    tabIndex={index+2}
+                    onClick={() => navigate(`${coinId}`)}
+                    >
                         <div className="w-[80px] flex flex-col items-center justify-between">
-                            <div className="w-[50px] h-[50px] bg-slate-400 shadow-sm rounded-full">
+                            <div className="w-[50px] h-[50px] bg-slate-400 shadow-sm rounded-full overflow-hidden">
+                                <img src={coinImage} width={50} height={50} />
                             </div>
                             <p className="justify-self-end">{coinName}</p>
                         </div>

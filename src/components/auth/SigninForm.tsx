@@ -32,7 +32,7 @@ export default function SigninForm() {
             if (res.status === 200) {
                 const data : {user: User, session:Session} = res.data
                 save(data)
-                navigate('/portfolio')
+                navigate('/')
             }
         } catch (error) {
             modalTriggerRef!.current?.click()
