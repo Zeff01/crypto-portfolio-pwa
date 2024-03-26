@@ -15,12 +15,13 @@ import AuthProvider from "./providers/AuthProvider"
 
 // loaders
 import { homeLoader } from "./loaders/homeLoader"
+import { profileLoader } from "./loaders/profileLoader"
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="" element={<Root />}>
             <Route path="" element={<Main />}>
-                <Route path="portfolio" element={<Portfolio />} />
+                <Route path="portfolio" element={<Portfolio />} loader={profileLoader} />
                 <Route index element={<Home />} loader={homeLoader} />
             </Route>            
             <Route path="loading" element={<Loading />} /> {/* this route is temporary */}

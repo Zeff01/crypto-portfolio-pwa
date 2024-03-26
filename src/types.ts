@@ -92,3 +92,34 @@ export interface TrendingToken {
     };
     iconUrl: string;
 }
+
+export interface PortfolioItem {
+    id: number;
+    created_at: string;
+    shares: number;
+    coinId: number;
+    coinImage: string;
+    coinName: string;
+    allTimeHigh: number;
+    allTimeLow: number;
+    athRoi: number;
+    increaseFromATL: number;
+    totalHoldings: number;
+    trueBudgetPerCoin: number;
+    additionalBudget: number;
+    projectedRoi: number;
+    marketCap: number;
+    totalSupply: number;
+    circulatingSupply: number;
+    maxSupply: number;
+    tradingVolume: number;
+    marketCapRank: number;
+    userId: string;
+    priceChangeIcon: 'arrow-up' | 'arrow-down'; // Assuming only two possible values
+    priceChangeColor: 'green' | 'red'; // Assuming only two possible values
+    currentPrice: number;
+    priceChangePercentage: number;
+    orderIndex: number | null;
+    coinSymbol: string;
+    coinDescription: string;
+}
