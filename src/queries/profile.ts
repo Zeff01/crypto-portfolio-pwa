@@ -49,7 +49,7 @@ class ProfileQuery {
 
     // TODO: update the  type of body
     async addCoin(id:string, jwt:string, body:any) {
-        const res = await axios.post(`${API_URL}/api/profile/userinfo/${id}`, 
+        const res = await axios.post(`${API_URL}/api/profile/addCoin/${id}`, 
         body,
         {
             headers: {Authorization: `Bearer ${jwt}`}

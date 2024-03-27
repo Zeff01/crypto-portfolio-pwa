@@ -2,7 +2,7 @@ import { Formik, Form, Field, } from "formik"
 import Button from "../common/Button"
 import InvalidCredentialsModal from "./InvalidCredentialsModa"
 import { useRef } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { userUserData } from "@/hooks/useUserData"
 import { User, Session } from '@supabase/supabase-js'
 import { AuthFetch } from "@/queries"
@@ -11,11 +11,14 @@ import * as yup from 'yup'
 export default function SigninForm() {
     const modalTriggerRef =  useRef<HTMLButtonElement>(null)
     
+    const [searchParams, setSearchParams] = useSearchParams()
     const navigate =  useNavigate()
     const save = userUserData(s => s.save)
     
+    const email = searchParams.get('email')
+
     const initialValues = {
-        email: '',
+        email: email ?? "",
         password: ''
     }
 

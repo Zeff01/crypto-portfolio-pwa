@@ -125,3 +125,25 @@ export interface PortfolioItem {
     mustOwnShares: number;
     sharesMissing: number;
 }
+
+export interface CoinData {
+    id: number;
+    name: string;
+    symbol: string;
+    logo: string;
+    description: string;
+    marketCapRank: number;
+    currentPrice: number;
+    tradingVolume: number;
+    marketCap: number;
+    circulatingSupply: number;
+    totalSupply: number;
+    maxSupply: number | null;
+    allTimeHigh: number;
+    allTimeLow: number;
+    athRoi: number;
+    percentIncreaseFromAtl: number;
+    priceChangeIcon: 'arrow-up' | 'arrow-down';
+    priceChangeColor: 'green' | 'red';
+    priceChangePercentage: number;
+};

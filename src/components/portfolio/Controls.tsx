@@ -1,6 +1,7 @@
 
 import { FaPlus } from "react-icons/fa6";
 import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
 
 type ControlsProps = {
     listType: 'card'|'accordion';
@@ -8,6 +9,7 @@ type ControlsProps = {
 }
 
 export default function Controls({listType, toggleListType}:ControlsProps) {
+    const navigate = useNavigate()
 
     return (
         <div className="flex flex-row justify-end gap-x-2">
@@ -38,7 +40,9 @@ export default function Controls({listType, toggleListType}:ControlsProps) {
                 </svg>
             </Button>
             }                    
-            <Button className="gap-x-1 rounded-full px-4 bg-custom-card hover:bg-custom-card dark:text-custom-white">
+            <Button className="gap-x-1 rounded-full px-4 bg-custom-card hover:bg-custom-card dark:text-custom-white"
+            onClick={() => navigate('/search')}
+            >
                 <FaPlus className="fill-custom-teal" />
                 <p className="text-sm font-[500]">Add</p>
             </Button>
