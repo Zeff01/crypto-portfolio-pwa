@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
   manifest:{
     name:"Crypto Portfolio",
     short_name:"crypto-portfolio",
