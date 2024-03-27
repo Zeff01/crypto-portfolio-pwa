@@ -57,7 +57,7 @@ export default function CoinScreen() {
                                 </Button>
                             </div>
                             <div className="flex flex-col w-full  py-4 gap-y-4 font-[500]">
-                                {tableData.map((r, index) => {
+                                {tableData.map((r) => {
                                     const key =  r[0];
                                     const value = r[1];
 

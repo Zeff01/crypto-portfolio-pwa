@@ -11,7 +11,7 @@ import * as yup from 'yup'
 export default function SigninForm() {
     const modalTriggerRef =  useRef<HTMLButtonElement>(null)
     
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [searchParams] = useSearchParams()
     const navigate =  useNavigate()
     const save = userUserData(s => s.save)
     

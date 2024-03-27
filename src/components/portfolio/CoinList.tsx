@@ -2,7 +2,6 @@ import Controls from "./Controls";
 import CoinCard from "./CoinCard";
 import { Suspense, useState } from "react";
 import CoinAccordion from "./CoinAccordion";
-import { Accordion } from "../ui/accordion";
 import { Await, useLoaderData } from "react-router-dom";
 import { PortfolioItem } from "@/types";
 
