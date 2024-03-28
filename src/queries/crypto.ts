@@ -10,8 +10,10 @@ class CoinQuery {
         return res
     }
 
-    async searchWithDetails(symbol:string) {
-        const res = await axios.get(`${API_URL}/api/cmc/searchwithdetails/${symbol}`)
+    async searchWithDetails(symbol:string, abort:AbortController) {
+        const res = await axios.get(`${API_URL}/api/cmc/searchwithdetails/${symbol}`, {
+            signal: abort.signal
+        })
         return res
     }
 

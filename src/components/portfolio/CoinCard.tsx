@@ -2,6 +2,7 @@ import { IoChevronUp, IoChevronDown } from "react-icons/io5";
 import { PortfolioItem } from "@/types";
 import { safeToFixed } from "@/lib/helpers";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 interface CoinCardProps extends PortfolioItem  {
     index: number
@@ -18,7 +19,7 @@ export default function CoinCard( {coinId, coinName, currentPrice, priceChangePe
             className="bg-custom-white dark:bg-custom-card rounded-lg shadow-md p-4 pr-1 flex flex-col justify-between font-[500] h-[120px]"
             role="button"
             tabIndex={index+2}
-            onClick={() => navigate(`${coinId}`)}
+            onClick={() => navigate(`${coinId}`)}            
             >
                 <div className="flex flex-row items-center gap-x-2 ">
                     <div className="w-[20px] h-[20px] bg-slate-400 shadow-sm rounded-full overflow-hidden">

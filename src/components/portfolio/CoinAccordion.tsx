@@ -28,7 +28,6 @@ export default function CoinAccordion({coinId, coinImage, coinName, currentPrice
                     <div className="bg-white dark:bg-custom-card w-full h-full py-4 px-2 flex flex-row gap-x-4 overflow-x-scroll justify-between shadow-md rounded-md"
                     role="button"
                     tabIndex={index+2}
-                    onClick={() => navigate(`${coinId}`)}
                     >
                         <div className="w-[80px] flex flex-col items-center justify-between">
                             <div className="w-[50px] h-[50px] bg-slate-400 shadow-sm rounded-full overflow-hidden">
@@ -61,7 +60,9 @@ export default function CoinAccordion({coinId, coinImage, coinName, currentPrice
                             <div role="button" tabIndex={index+1} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3">
                                 <IoClose className="fill-custom-destructive" />
                             </div>
-                            <div role="button" tabIndex={index*2} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3">
+                            <div role="button" tabIndex={index*2} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3"
+                            onClick={() => navigate(`${coinId}`)}
+                            >
                                 <IoChevronForward className="stroke-custom-teal" />
                             </div>
                         </div>

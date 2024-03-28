@@ -147,3 +147,10 @@ export interface CoinData {
     priceChangeColor: 'green' | 'red';
     priceChangePercentage: number;
 };
+
+export type UserInfo = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    username: string;
+}

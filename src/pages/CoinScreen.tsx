@@ -51,7 +51,7 @@ export default function CoinScreen() {
                                     Show More
                                 </Button>
                                 <Button variant={"ghost"} size={"icon"} className="absolute top-0 left-4  hover:bg-transparent shadow-md rounded-full"
-                                onClick={() => navigate('..')}
+                                onClick={() => navigate('/portfolio')}
                                 >
                                     <TbArrowBack className="text-3xl stroke-custom-black dark:stroke-custom-teal" />
                                 </Button>

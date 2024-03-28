@@ -18,6 +18,8 @@ import { CoinFetch, ProfileFetch } from "@/queries";
 import { debounce } from 'lodash'
 import { getIdFromStorage, getJwtFromStorage } from "@/lib/helpers";
 import { useNavigate } from "react-router-dom";
+import { safeToFixed } from "@/lib/helpers";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 
 export default function Search() {
@@ -26,19 +28,20 @@ export default function Search() {
     const [query, setQuery] = useState('')
     const [selectedCoin, setSelectedCoin] = useState<CoinData|null>(null)
     const [numberOfShares, setNumberOfShares] = useState<number>(0)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
-    const debouncedSearch = debounce(async (query) => {
+    const debouncedSearch = debounce(async (query, abort:AbortController) => {
         if (!query) return setCoinList([]);
-        // setSearchLoading(true);
         try {
-          const results = await CoinFetch.searchWithDetails(query);
-          const data = results.data as CoinData[]
-          setCoinList(data);
+            setLoading(true)
+            const results = await CoinFetch.searchWithDetails(query, abort);
+            const data = results.data as CoinData[]
+            setCoinList(data);
         } catch (error) {
-          console.error(error);
+            console.error(error);
         } finally {
-        //   setSearchLoading(false);
+              setLoading(false);
         }
       }, 500);
 
@@ -58,7 +61,7 @@ export default function Search() {
                 userId: id
             })
             if (res.status === 201) {                
-                navigate('..')
+                navigate('/portfolio')
             }
         } catch (error) {
             console.error(error)
@@ -66,10 +69,12 @@ export default function Search() {
       }
 
       useEffect(() => {
-        debouncedSearch(query);
+        const controller = new AbortController()
+        debouncedSearch(query, controller);
         return () => {
-        //   setSearchLoading(false);
-          return debouncedSearch.cancel();
+            setLoading(false);
+            controller.abort()
+            debouncedSearch.cancel();
         };
       }, [query]);
 
@@ -84,18 +89,26 @@ export default function Search() {
                 value={query}
                 onChange={(e) => setQuery(e.currentTarget.value)}
                 />
-                <CiSearch className="absolute top-1/2 right-4 -translate-y-1/2 text-2xl fill-custom-teal" />
+                <span className="absolute top-1/2 right-4 -translate-y-1/2 text-2xl">
+                    {
+                        loading ?
+                        <AiOutlineLoading3Quarters className="fill-custom-teal animate-spin" /> :
+                        <CiSearch className=" fill-custom-teal" />
+                    }
+
+                </span>
             </div>
             <div className="flex-grow flex flex-col pt-12 ps-4 gap-y-4">
                 {coinList.map(s => {
                     return (
                         <AlertDialog key={s.id}>
                             <AlertDialogTrigger asChild onClick={() => setSelectedCoin(s)}>
-                                <div className="flex flex-row gap-x-4 items-center" role="button" tabIndex={2}>
+                                <div className="pb-2 border-b border-custom-border flex flex-row gap-x-4 items-center" role="button" tabIndex={2}>
                                     <div className="w-[36px] h-[36px] bg-slate-400 shadow-sm rounded-full overflow-hidden">
                                         <img src={s.logo} width={36} height={36} />
                                     </div>
                                     <p>{s.symbol}</p>
+                                    <p className="ms-auto pe-2 font-[500]">{safeToFixed(s.currentPrice)}</p>
                                 </div>
                             </AlertDialogTrigger>
                             <AlertDialogContent className="bg-custom-background dark:bg-custom-darkbackground">

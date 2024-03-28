@@ -28,7 +28,6 @@ export default function Latest() {
         <Suspense fallback={<LatestLoading />}>
             <Await resolve={globalMetrics}>
                 {(res) => {
-                    console.log(res)
                     const globalMetrics = res.data.data as GlobalMetrics
 
                     const { total_market_cap, total_volume_24h, total_market_cap_yesterday, total_volume_24h_yesterday } = globalMetrics.quote.USD

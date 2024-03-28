@@ -9,6 +9,7 @@ import Home from "./pages/Home"
 import Search from "./pages/Search"
 import CoinScreen from "./pages/CoinScreen"
 import Test from "./pages/Test"
+import RootErrorBoundary from "./components/common/RootErrorBoundary"
 
 // providers
 import ThemeProvider from "./providers/ThemeProvider"
@@ -24,7 +25,7 @@ import { profileAction } from "./actions/profileAction"
 
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path="" element={<Root />}>
+        <Route path="" element={<Root />} errorElement={<RootErrorBoundary />}>
             <Route path="" element={<Main />}>
                 <Route path="portfolio" element={<Portfolio />} loader={profileLoader} action={profileAction} />
                 <Route index element={<Home />} loader={homeLoader} />
