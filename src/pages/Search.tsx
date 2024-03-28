@@ -20,6 +20,7 @@ import { getIdFromStorage, getJwtFromStorage } from "@/lib/helpers";
 import { useNavigate } from "react-router-dom";
 import { safeToFixed } from "@/lib/helpers";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { userUserData } from "@/hooks/useUserData";
 
 
 export default function Search() {
@@ -29,6 +30,7 @@ export default function Search() {
     const [selectedCoin, setSelectedCoin] = useState<CoinData|null>(null)
     const [numberOfShares, setNumberOfShares] = useState<number>(0)
     const [loading, setLoading] = useState(false)
+    const userData  = userUserData(s => s.userData)
     const navigate = useNavigate()
 
     const debouncedSearch = debounce(async (query, abort:AbortController) => {
@@ -79,7 +81,10 @@ export default function Search() {
       }, [query]);
 
     
-
+    if (!userData) {
+        return null
+    }
+    
     return (
         <div className="px-4 py-12 w-screen h-fit min-h-full bg-custom-background dark:bg-custom-darkbackground">
             <div className="relative w-full h-fit">

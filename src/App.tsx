@@ -31,11 +31,12 @@ const router = createBrowserRouter(
                 <Route index element={<Home />} loader={homeLoader} />
                 <Route path="portfolio/:coinId" element={<CoinScreen />} loader={coinScreenLoader} />
             </Route>            
-            <Route path="loading" element={<Loading />} /> {/* this route is temporary */}
+            {/* this route is temporary */}
+            {/* <Route path="loading" element={<Loading />} />  */}
             <Route path="signup" element={<Signup />} />
             <Route path="signin" element={<Signin />} />
             <Route path="search" element={<Search />} />
-            <Route path="test" element={<Test />} />
+            {/* <Route path="test" element={<Test />} /> */}
         </Route>
     )
 )

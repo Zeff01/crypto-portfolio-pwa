@@ -8,16 +8,21 @@ import { useExchangeRate } from "@/hooks/useExchangeRate"
 import { Button } from "@/components/ui/button"
 import { TbArrowBack } from "react-icons/tb";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { userUserData } from "@/hooks/useUserData"
 
 export default function CoinScreen() {
     const  {portfolioPromise} = useLoaderData() as {portfolioPromise: Promise<any>}
     const exchangeRate = useExchangeRate(s => s.exchangeRate)
     const [descExpanded, setDescExpanded] = useState(false)
-    
+    const userData = userUserData(s => s.userData)
     const navigate = useNavigate()
 
     function toggleDescription() {
         setDescExpanded(d => !d)
+    }
+
+    if (!userData) {
+        return null
     }
 
     return (
