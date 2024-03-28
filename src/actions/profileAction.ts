@@ -12,9 +12,15 @@ export async function  profileAction({request}:ActionFunctionArgs) {
 
     const formData = await request.formData() // this converts data to strings
 
-    const data = Object.fromEntries(formData) as {type: "change_balance"; newBudget:string}
+    const data = Object.fromEntries(formData) as {type: "change_balance"; newBudget:string; itemId:string;}
+    console.log({data}, 'action data')
     if (data.type === 'change_balance') {
         await ProfileFetch.updateBudget(id,jwt, {newBudget: Number(data.newBudget)})
+        return null
+    
+    }
+    if (data.type === 'delete_coin') {
+        await ProfileFetch.deleteCoin(id, jwt, data.itemId)
         return null
     }
     

@@ -140,6 +140,7 @@ export default function Balance() {
                         className="bg-transparent dark:bg-transparent w-[200px] border-custom-border"
                         />
                         <Button 
+                        type="button"
                         variant={"ghost"} 
                         size={"icon"} 
                         className="border-none hover:bg-transparent active:bg-transparent disabled:opacity-50"

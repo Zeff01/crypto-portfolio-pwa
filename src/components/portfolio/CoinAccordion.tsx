@@ -2,7 +2,20 @@ import { IoChevronUp, IoChevronDown, IoClose , IoChevronForward } from "react-ic
 import { PortfolioItem } from "@/types";
 import { safeToFixed } from "@/lib/helpers";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
-import { useNavigate } from "react-router-dom";
+import { useFetcher, useNavigate } from "react-router-dom";
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+  } from "@/components/ui/alert-dialog"
+  
 
 
 interface CoinAccordionProps extends PortfolioItem {
@@ -10,7 +23,7 @@ interface CoinAccordionProps extends PortfolioItem {
 }
 
 
-export default function CoinAccordion({coinId, coinImage, coinName, currentPrice, priceChangePercentage, index}:CoinAccordionProps) {
+export default function CoinAccordion({id, coinId, coinImage, coinName, currentPrice, priceChangePercentage, index}:CoinAccordionProps) {
     const exchangeRate = useExchangeRate(s => s.exchangeRate)
 
     const price = currentPrice < 1 ? currentPrice.toFixed(9) : safeToFixed(currentPrice)    
@@ -18,8 +31,9 @@ export default function CoinAccordion({coinId, coinImage, coinName, currentPrice
     const phpPrice = phpCurrentPrice < 1 ? phpCurrentPrice.toFixed(9) : safeToFixed(phpCurrentPrice)
 
     const navigate = useNavigate()
+    const fetcher = useFetcher()
+    const deleteCoin = fetcher.submit
     
-
     return (
         <div className="pb-4"
         >
@@ -57,9 +71,46 @@ export default function CoinAccordion({coinId, coinImage, coinName, currentPrice
                             </div>
                         </div>
                         <div className="flex flex-col  justify-between gap-y-2">
-                            <div role="button" tabIndex={index+1} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3">
-                                <IoClose className="fill-custom-destructive" />
-                            </div>
+                           
+                            <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                    <div role="button" tabIndex={index+1} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3">
+                                        <IoClose className="fill-custom-destructive" />
+                                    </div>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This action cannot be undone. This will delete the coin records from our servers.
+                                    </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction
+                                    disabled={fetcher.state === 'submitting'}
+                                    className="disabled:opacity-60"
+                                    onClick={() => {
+                                        if (fetcher.state === 'idle') {
+                                            deleteCoin(
+                                                {
+                                                    type: 'delete_coin',
+                                                    itemId: id
+                                                },
+                                                {
+                                                    method: 'DELETE',
+                                                    action: ''   
+                                                }
+
+                                            )
+                                        }
+                                    }}
+                                    >
+                                        Continue
+                                    </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
                             <div role="button" tabIndex={index*2} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3"
                             onClick={() => navigate(`${coinId}`)}
                             >

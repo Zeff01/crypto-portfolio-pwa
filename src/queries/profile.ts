@@ -75,6 +75,13 @@ class ProfileQuery {
         return res
     }
 
+    async deleteCoin(id:string, jwt: string, itemId: string) {
+        const res = await axios.delete(`${API_URL}/api/profile/delete/${id}/${itemId}`, {
+            headers: {Authorization: `Bearer ${jwt}`}
+        })
+        return res
+    }
+
 
 
 
