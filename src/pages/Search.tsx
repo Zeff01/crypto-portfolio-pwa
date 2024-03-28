@@ -58,7 +58,7 @@ export default function Search() {
                 userId: id
             })
             if (res.status === 201) {                
-                navigate('/profile')
+                navigate('..')
             }
         } catch (error) {
             console.error(error)
