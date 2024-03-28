@@ -2,13 +2,11 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Root from "@/layouts/Root"
 import Main from "@/layouts/Main"
 import Portfolio from "./pages/Portfolio"
-import Loading from "./pages/Loading"
 import Signup from "./pages/Signup"
 import Signin from "./pages/Signin"
 import Home from "./pages/Home"
 import Search from "./pages/Search"
 import CoinScreen from "./pages/CoinScreen"
-import Test from "./pages/Test"
 import RootErrorBoundary from "./components/common/RootErrorBoundary"
 
 // providers
