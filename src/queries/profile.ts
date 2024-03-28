@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_URL } from "@/contants/environment";
+import { PortfolioItem } from "@/types";
 
 
 class ProfileQuery {
@@ -77,6 +78,18 @@ class ProfileQuery {
 
     async deleteCoin(id:string, jwt: string, itemId: string) {
         const res = await axios.delete(`${API_URL}/api/profile/delete/${id}/${itemId}`, {
+            headers: {Authorization: `Bearer ${jwt}`}
+        })
+        return res
+    }
+
+    async updateSingleCoin(id:string, jwt:string, shares:number, data: PortfolioItem) {
+        const res = await axios.put(`${API_URL}/api/profile/portfolio/${id}`, 
+        {
+            shares,
+            data
+        },
+        {
             headers: {Authorization: `Bearer ${jwt}`}
         })
         return res

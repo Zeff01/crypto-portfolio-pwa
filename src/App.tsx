@@ -20,6 +20,7 @@ import { coinScreenLoader } from "./loaders/coinScreenLoader"
 
 // actions
 import { profileAction } from "./actions/profileAction"
+import { coinScreenAction } from "./actions/coinScreenAction"
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -27,7 +28,7 @@ const router = createBrowserRouter(
             <Route path="" element={<Main />}>
                 <Route path="portfolio" element={<Portfolio />} loader={profileLoader} action={profileAction} />
                 <Route index element={<Home />} loader={homeLoader} />
-                <Route path="portfolio/:coinId" element={<CoinScreen />} loader={coinScreenLoader} />
+                <Route path="portfolio/:coinId" element={<CoinScreen />} loader={coinScreenLoader} action={coinScreenAction} />
             </Route>            
             {/* this route is temporary */}
             {/* <Route path="loading" element={<Loading />} />  */}

@@ -8,6 +8,9 @@ export async function profileLoader() {
     if (!jwt || !id) {
         return null
     }
+    // this updates the portfolio
+    await ProfileFetch.updatePortfolio(id, jwt)
+
     const budgetPromise = ProfileFetch.getBudget(id,jwt)
     const portfolioPromise = ProfileFetch.getPortfolioData(id,jwt)
     return defer({
