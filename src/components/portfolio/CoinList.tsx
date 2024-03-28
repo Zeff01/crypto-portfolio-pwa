@@ -1,17 +1,18 @@
 import Controls from "./Controls";
 import CoinCard from "./CoinCard";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import CoinAccordion from "./CoinAccordion";
 import { Await, useLoaderData } from "react-router-dom";
 import { PortfolioItem } from "@/types";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { listTypeStore } from "@/hooks/useListType";
 
 export  default function CoinList() {
-    const [listType, setListType] = useState<'card'|'accordion'>('card')
     const {portfolioPromise} = useLoaderData() as {portfolioPromise: Promise<any>}
+    const listType = listTypeStore(s => s.listType)
+    const toggleListType = listTypeStore(s => s.toggleListType)
 
-    function toggleListType() {
-        setListType(t => t === 'card' ? 'accordion' :  'card')
-    }
+
 
     return (
         <section className="py-4 flex flex-col gap-y-4">
@@ -19,7 +20,14 @@ export  default function CoinList() {
             { 
             listType === 'card' ? 
             <div className="flex flex-row flex-wrap">
-                <Suspense fallback={<p>loading...</p>}>
+                <Suspense fallback={
+                    <div className="h-[100px] w-full flex items-center justify-center">
+                        <div className="text-3xl">
+                            <AiOutlineLoading3Quarters className="animate-spin" />
+                        </div>  
+                    </div>
+            }
+                >
                     <Await resolve={portfolioPromise}>
                         {(res) => {
                             const portfolioCoins : PortfolioItem[] = res.data.data
@@ -33,17 +41,17 @@ export  default function CoinList() {
                                 </>
                             )
                         }}
-                {/* {portfolioCoins.map((p,i) => {
-                    return (
-                        // NOTE: index is used here for padding
-                        <CoinCard key={p.imageURL} {...p} index={i} />
-                        )
-                    })}             */}
                     </Await>
                 </Suspense>
             </div> :            
             <div className="w-full">
-                <Suspense fallback={<p>loading...</p>}>
+                <Suspense fallback={
+                    <div className="h-[100px] w-full flex items-center justify-center">
+                        <div className="text-3xl">
+                            <AiOutlineLoading3Quarters className="animate-spin" />
+                        </div>  
+                    </div>
+                }>
                     <Await resolve={portfolioPromise}>
                     {(res) => {
                             const portfolioCoins : PortfolioItem[] = res.data.data

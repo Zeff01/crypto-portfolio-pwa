@@ -7,6 +7,7 @@ import { DataToParse } from "@/lib/formatter"
 import { useExchangeRate } from "@/hooks/useExchangeRate"
 import { Button } from "@/components/ui/button"
 import { TbArrowBack } from "react-icons/tb";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function CoinScreen() {
     const  {portfolioPromise} = useLoaderData() as {portfolioPromise: Promise<any>}
@@ -22,8 +23,10 @@ export default function CoinScreen() {
     return (
         
         <Suspense fallback={
-            <div className="px-4 py-6">
-                <p>loading...</p>
+            <div className="px-4 py-6 h-[400px] w-full flex items-center justify-center">
+                <div className="text-5xl">
+                    <AiOutlineLoading3Quarters className="animate-spin" />
+                </div>
             </div>
         }>
             <Await resolve={portfolioPromise}>

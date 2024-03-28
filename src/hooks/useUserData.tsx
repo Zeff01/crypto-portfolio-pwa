@@ -27,7 +27,7 @@ export const userUserData = create<State & Action>((set) => ({
   userInfo: null,
 
   save: (data) => set(() => ({ userData:data })),
-  remove : () => set({ userData: null, userInfo: null }),
+  remove : () => set(() => ({ userData: null, userInfo: null })),
   saveInfo: (data) => set(() => ({userInfo: data}))
 }))
     

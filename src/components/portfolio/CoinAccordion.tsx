@@ -26,9 +26,10 @@ interface CoinAccordionProps extends PortfolioItem {
 export default function CoinAccordion({id, coinId, coinImage, coinName, currentPrice, priceChangePercentage, index}:CoinAccordionProps) {
     const exchangeRate = useExchangeRate(s => s.exchangeRate)
 
-    const price = currentPrice < 1 ? currentPrice.toFixed(9) : safeToFixed(currentPrice)    
+    const price = currentPrice < 1 ? currentPrice.toFixed(8) : Number(safeToFixed(currentPrice)).toLocaleString()
+
     const phpCurrentPrice = currentPrice * exchangeRate
-    const phpPrice = phpCurrentPrice < 1 ? phpCurrentPrice.toFixed(9) : safeToFixed(phpCurrentPrice)
+    const phpPrice = phpCurrentPrice < 1 ? phpCurrentPrice.toFixed(8) : Number(safeToFixed(phpCurrentPrice)).toLocaleString()
 
     const navigate = useNavigate()
     const fetcher = useFetcher()
@@ -39,7 +40,7 @@ export default function CoinAccordion({id, coinId, coinImage, coinName, currentP
         >
             <div>
                 <div className="w-screen pe-10 font-[500] text-sm"> {/**<--- this styles is needed for horizontal scrollbar when overflowing */}
-                    <div className="bg-white dark:bg-custom-card w-full h-full py-4 px-2 flex flex-row gap-x-4 overflow-x-scroll justify-between shadow-md rounded-md"
+                    <div className="bg-white dark:bg-custom-card w-full h-full py-4 px-1 flex flex-row gap-x-4 overflow-x-scroll justify-between shadow-md rounded-md"
                     role="button"
                     tabIndex={index+2}
                     >
@@ -51,11 +52,11 @@ export default function CoinAccordion({id, coinId, coinImage, coinName, currentP
                         </div>
                         <div className="flex flex-col justify-between py-3 items-start">
                             <p className="flex flex-row gap-1 items-baseline">
-                                <span>{Number(price).toLocaleString()}</span>
+                                <span>{price}</span>
                                 <span className="text-[10px] text-custom-text">USD</span>
                             </p>
                             <p className="flex flex-row gap-1 items-baseline">
-                                <span>{Number(phpPrice).toLocaleString()}</span>
+                                <span>{phpPrice}</span>
                                 <span className="text-[10px] text-custom-text">PHP</span>
                             </p>
                         </div>
@@ -80,7 +81,7 @@ export default function CoinAccordion({id, coinId, coinImage, coinName, currentP
                                 </AlertDialogTrigger>
                                 <AlertDialogContent>
                                     <AlertDialogHeader>
-                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                    <AlertDialogTitle>Delete {coinName}?</AlertDialogTitle>
                                     <AlertDialogDescription>
                                         This action cannot be undone. This will delete the coin records from our servers.
                                     </AlertDialogDescription>

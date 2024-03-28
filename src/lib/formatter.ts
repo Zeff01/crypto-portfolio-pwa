@@ -20,6 +20,7 @@ export const DataToParse : Record<string,string> = {
   tradingVolume: "24h Trading Volume",
 };
 const formats = {
+  // will have two values php and usd
   isMoneyWithConversion: [
     "allTimeHigh",
     "allTimeLow",
@@ -28,7 +29,9 @@ const formats = {
     "additionalBudget",
     "projectedRoi",
   ],
+  // has USD symbol
   isMoney: ["marketCap", "tradingVolume"],
+  // no USD symbol
   isBigNums: [
     "totalSupply",
     "circulatingSupply",
@@ -38,6 +41,7 @@ const formats = {
   ],
 };
 export function generateTableData(data: PortfolioItem, dataToParse: typeof DataToParse, exchangeRate: number) {
+  console.log({data})
   const result = [
     // ['', ''],
     // ['Coin Name', data.coinName ?? 'N/A'],
@@ -46,10 +50,10 @@ export function generateTableData(data: PortfolioItem, dataToParse: typeof DataT
   ];
 
   for (const k in dataToParse) {
-    if (k === "maxSupply" && data[k] === 0) {
+    if (k === "maxSupply" && !data[k]) {
       result.push([dataToParse[k], "Unlimited"]);
       continue;
-    } else if (k === "currentPrice") {
+    } else if (k === "currentPrice" || k === "allTimeHigh" || k === "allTimeLow") {
       const price = Number(data[k]);
       const item =
         price < 1
@@ -64,15 +68,17 @@ export function generateTableData(data: PortfolioItem, dataToParse: typeof DataT
     let item = typeof value === "number" ? safeToFixed(value) : value;
 
     if (k === "athRoi" && typeof value === "number") {
-      item = `${safeToFixed(value)}x`;
-    } else if (formats.isMoneyWithConversion.includes(k)) {
-      item = `$${Number(item).toLocaleString()}|₱${Number(
-        safeToFixed(Number(item) * exchangeRate)
-      ).toLocaleString()}`;
-    } else if (formats.isMoney.includes(k)) {
-      item = `$${Number(item).toLocaleString()}`;
-    } else if (formats.isBigNums.includes(k)) {
-      item = Number(item).toLocaleString();
+        item = `${safeToFixed(value)}x`;
+    } 
+    else if (formats.isMoneyWithConversion.includes(k)) {
+        item = 
+        `$${Number(item).toLocaleString()}|₱${Number(safeToFixed(Number(item) * exchangeRate)).toLocaleString()}`;
+    } 
+    else if (formats.isMoney.includes(k)) {
+        item = `$${Number(item).toLocaleString()}`;
+    } 
+    else if (formats.isBigNums.includes(k)) {
+        item = Number(item).toLocaleString();
     }
 
     if (isNaN(value)) {

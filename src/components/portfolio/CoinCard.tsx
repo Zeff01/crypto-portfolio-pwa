@@ -2,7 +2,6 @@ import { IoChevronUp, IoChevronDown } from "react-icons/io5";
 import { PortfolioItem } from "@/types";
 import { safeToFixed } from "@/lib/helpers";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 
 interface CoinCardProps extends PortfolioItem  {
     index: number
@@ -11,7 +10,7 @@ interface CoinCardProps extends PortfolioItem  {
 export default function CoinCard( {coinId, coinName, currentPrice, priceChangePercentage, index, coinImage}:CoinCardProps) {
     const  navigate = useNavigate()
 
-    const price = currentPrice < 1 ? currentPrice.toFixed(9) : safeToFixed(currentPrice)
+    const price = currentPrice < 1 ? currentPrice.toFixed(8) : Number(safeToFixed(currentPrice)).toLocaleString()
 
     return (
         <div className={`basis-1/2 pb-2 ${index%2===0?"pe-2":""} overflow-x-scroll`}>
@@ -31,7 +30,7 @@ export default function CoinCard( {coinId, coinName, currentPrice, priceChangePe
                     <div className="flex flex-row items-end">
                         <p className="text-[12px]">Price:&nbsp;</p>
                         <p className="flex flex-row items-center">
-                            <span className="text-sm">{Number(price).toLocaleString()}</span>
+                            <span className="text-sm">{price}</span>
                             <span className="text-[10px] font-[400]">&nbsp;USD</span>
                         </p> 
                     </div>
