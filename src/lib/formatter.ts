@@ -41,7 +41,6 @@ const formats = {
   ],
 };
 export function generateTableData(data: PortfolioItem, dataToParse: typeof DataToParse, exchangeRate: number) {
-  console.log({data})
   const result = [
     // ['', ''],
     // ['Coin Name', data.coinName ?? 'N/A'],

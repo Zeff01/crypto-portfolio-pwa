@@ -6,11 +6,12 @@ import { AuthFetch } from "@/queries";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
 import { ProfileFetch } from "@/queries";
 
-const AuthContext = createContext<{appLoading:boolean}>({appLoading:true})
+const AuthContext = createContext<{appLoading:boolean; showIsPaidModal:boolean}>({appLoading:true, showIsPaidModal: false})
 
 export default function AuthProvider({children}:{children:ReactNode}) {
 
     const [appLoading, setAppLoading] = useState(true)
+    const [showIsPaidModal, setShowIsPaidModal]  = useState(false)
     const save = userUserData(s => s.save)
     const saveInfo = userUserData(s => s.saveInfo)
     const userData = userUserData(s => s.userData)
@@ -30,6 +31,19 @@ export default function AuthProvider({children}:{children:ReactNode}) {
             localStorage.removeItem('id')
         } finally {
             setAppLoading(false)
+        }
+    }
+
+    async function getPaymentStatus(id:string, jwt:string) {
+        try {
+            const res = await ProfileFetch.getPaymentStatus(id, jwt)
+            if (res.status === 200) {
+                const isPaid = res.data.isPaid
+                setShowIsPaidModal(!Boolean(isPaid))
+                console.warn(`user is ${isPaid ? "paid" : "unpaid"}`)
+            }
+        } catch (error) {
+            console.error(error)
         }
     }
 
@@ -79,8 +93,17 @@ export default function AuthProvider({children}:{children:ReactNode}) {
         localStorage.removeItem('jwt')
     }, [userData])
 
+    // checks the userdata and show the modal if unpaid
+    useEffect(() => {
+        if (!userData) {
+            setShowIsPaidModal(false)
+            return
+        } 
+        getPaymentStatus(userData.user.id, userData.session.access_token)
+    }, [userData])
+
     return (
-        <AuthContext.Provider value={{appLoading}}>
+        <AuthContext.Provider value={{appLoading, showIsPaidModal}}>
             {children}
         </AuthContext.Provider>
     )
