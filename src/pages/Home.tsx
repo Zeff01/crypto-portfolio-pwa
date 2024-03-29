@@ -7,7 +7,6 @@ import { Link } from "react-router-dom"
 export default  function Home() {
 
     const userInfo = userUserData(s => s.userInfo)
-    const userData = userUserData(s => s.userData)
 
     return (        
         <div className="w-screen pt-6  px-4">
