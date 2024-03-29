@@ -57,7 +57,8 @@ export default function SigninForm() {
                             <label className="text-sm dark:text-custom-text">Password</label>
                             <Field type="password" name="password" className="border-b border-custom-border py-1 px-2 bg-transparent" />
                         </div>    
-                        <p className="pt-10 text-sm dark:text-custom-text">Forgot?</p>
+                        {/* will be implemented in the future */}
+                        <p className="pt-10 text-sm dark:text-custom-text opacity-0">Forgot?</p> 
                         <div className="flex justify-center pt-6">
                             <Button 
                             type="submit" 

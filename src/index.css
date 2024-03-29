@@ -75,32 +75,52 @@
     @apply bg-background text-foreground;
   }
 
+  /* For Firefox */
+/* Set the width and color of the scrollbar */
+/* Note: Firefox does not support rounded corners for the thumb */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+
+/* For Edge (Chromium-based) and older versions of IE */
+/* Adjust the width and style of the scrollbar */
+/* Note: Edge supports rounded corners but older IE versions do not */
+* {
+  -ms-overflow-style: thin;
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+
+/* For webkit-based browsers (Chrome, Safari) */
 /* Style the scrollbar track (background) */
 ::-webkit-scrollbar-track {
-  background-color: transparent; /* Transparent background for the track */
+  background-color: transparent !important; /* Transparent background for the track */
 }
 
 /* Style the scrollbar thumb (the draggable part) */
 ::-webkit-scrollbar-thumb {
-  background-color: #888; /* Color of the thumb */
+  background-color: #888 !important; /* Color of the thumb */
   border-radius: 3px; /* Rounded corners for the thumb */
 }
 
 /* Style the scrollbar thumb when hovered */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Color of the thumb on hover */
+  background-color: #555 !important; /* Color of the thumb on hover */
 }
 
 /* Style the scrollbar thumb when active (clicked) */
 ::-webkit-scrollbar-thumb:active {
-  background-color: #333; /* Color of the thumb when active */
+  background-color: #333 !important; /* Color of the thumb when active */
 }
 
 /* Adjust the width of the scrollbar */
 ::-webkit-scrollbar {
-  width: 6px; /* Set the width of the scrollbar */
-  height: 6px; /* Set the height of the scrollbar (for horizontal scrollbar) */
+  width: 6px !important; /* Set the width of the scrollbar */
+  height: 6px !important; /* Set the height of the scrollbar (for horizontal scrollbar) */
 }
+
+
 
 
 }

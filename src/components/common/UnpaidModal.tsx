@@ -48,7 +48,7 @@ export default function UnpaidModal() {
                     <TooltipTrigger asChild>
                         <div className="absolute top-4 right-4 text-custom-destructive text-2xl"
                         role="button"
-                        tabIndex={1}
+                        tabIndex={0}
                         onClick={logout}
                         >
                             <TbLogout />

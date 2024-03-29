@@ -17,7 +17,7 @@ export default function CoinCard( {coinId, coinName, currentPrice, priceChangePe
             <div 
             className="bg-custom-white dark:bg-custom-card rounded-lg shadow-md p-4 pr-1 flex flex-col justify-between font-[500] h-[120px]"
             role="button"
-            tabIndex={index+2}
+            tabIndex={0}
             onClick={() => navigate(`${coinId}`)}            
             >
                 <div className="flex flex-row items-center gap-x-2 ">

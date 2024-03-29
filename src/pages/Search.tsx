@@ -86,10 +86,10 @@ export default function Search() {
     }
     
     return (
-        <div className="px-4 py-12 w-screen h-fit min-h-full bg-custom-background dark:bg-custom-darkbackground">
+        <div className="px-4 py-8 pb-12 w-screen h-fit min-h-full bg-custom-background dark:bg-custom-darkbackground">
             <div className="relative w-full h-fit">
                 <Input 
-                type="text" placeholder="Search..." 
+                type="text" placeholder="Search a coin..." 
                 className="px-6 h-14 rounded-full border border-transparent dark:border-gray-700"
                 value={query}
                 onChange={(e) => setQuery(e.currentTarget.value)}

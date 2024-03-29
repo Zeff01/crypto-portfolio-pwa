@@ -101,7 +101,7 @@ export default forwardRef(function Settings(_,ref:ForwardedRef<HTMLButtonElement
                             {
                             userData ?
                             <p role="button" 
-                            tabIndex={5}
+                            tabIndex={0}
                             onClick={logout}
                             >
                                 Sign Out

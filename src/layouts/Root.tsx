@@ -7,6 +7,7 @@ export default function Root() {
     const { appLoading } = useAuthContext()
 
 
+
     return (
         <>
             <UnpaidModal />

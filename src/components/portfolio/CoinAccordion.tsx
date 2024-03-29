@@ -23,7 +23,7 @@ interface CoinAccordionProps extends PortfolioItem {
 }
 
 
-export default function CoinAccordion({id, coinId, coinImage, coinName, currentPrice, priceChangePercentage, index}:CoinAccordionProps) {
+export default function CoinAccordion({id, coinId, coinImage, coinName, currentPrice, priceChangePercentage}:CoinAccordionProps) {
     const exchangeRate = useExchangeRate(s => s.exchangeRate)
 
     const price = currentPrice < 1 ? currentPrice.toFixed(8) : Number(safeToFixed(currentPrice)).toLocaleString()
@@ -42,7 +42,7 @@ export default function CoinAccordion({id, coinId, coinImage, coinName, currentP
                 <div className="w-screen pe-10 font-[500] text-sm"> {/**<--- this styles is needed for horizontal scrollbar when overflowing */}
                     <div className="bg-white dark:bg-custom-card w-full h-full py-4 px-1 flex flex-row gap-x-4 overflow-x-scroll justify-between shadow-md rounded-md"
                     role="button"
-                    tabIndex={index+2}
+                    tabIndex={0}
                     >
                         <div className="w-[80px] flex flex-col items-center justify-between">
                             <div className="w-[50px] h-[50px] bg-slate-400 shadow-sm rounded-full overflow-hidden">
@@ -75,7 +75,7 @@ export default function CoinAccordion({id, coinId, coinImage, coinName, currentP
                            
                             <AlertDialog>
                                 <AlertDialogTrigger asChild>
-                                    <div role="button" tabIndex={index+1} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3">
+                                    <div role="button" tabIndex={0} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3">
                                         <IoClose className="fill-custom-destructive" />
                                     </div>
                                 </AlertDialogTrigger>
@@ -112,7 +112,7 @@ export default function CoinAccordion({id, coinId, coinImage, coinName, currentP
                                     </AlertDialogFooter>
                                 </AlertDialogContent>
                             </AlertDialog>
-                            <div role="button" tabIndex={index*2} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3"
+                            <div role="button" tabIndex={0} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3"
                             onClick={() => navigate(`${coinId}`)}
                             >
                                 <IoChevronForward className="stroke-custom-teal" />
