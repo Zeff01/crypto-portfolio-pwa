@@ -21,8 +21,9 @@ export default function AuthProvider({children}:{children:ReactNode}) {
         try {
             const res = await AuthFetch.refresh(session)
             if (res.status === 201) {
-                const data  = res.data as {user:User, session:Session}                
-                save(data)
+                const data  = res.data as {user:User, session:Session}                                
+                await ProfileFetch.updatePortfolio(data.user.id, data.session.access_token)
+                save(data)                                
             }
         } catch (error) {
             console.log('user not logged in')
@@ -49,19 +50,18 @@ export default function AuthProvider({children}:{children:ReactNode}) {
 
     // exchange rate checker
     useEffect(() => {
-        updateExchangeRate()
+        try {
+            updateExchangeRate()            
+        } catch (error) {
+            console.error('update exchange rate failed', error)
+        }
     }, [])
 
     // session refresher
     useEffect(() => {        
-        const sessionStr = localStorage.getItem('session')
-        if (sessionStr) {
-            const session = JSON.parse(sessionStr)
-            refreshSession(session)        
-        }
-        else {
-            setAppLoading(false)
-        }
+        const sessionStr = localStorage.getItem('session') as string
+        const session = JSON.parse(sessionStr)
+        refreshSession(session ?? undefined) 
     }, [])
 
     async function getUserInfo(userData: {session:Session; user: User}) {
@@ -91,6 +91,7 @@ export default function AuthProvider({children}:{children:ReactNode}) {
         // user signed out
         localStorage.removeItem('session')
         localStorage.removeItem('jwt')
+        localStorage.removeItem('id')
     }, [userData])
 
     // checks the userdata and show the modal if unpaid
@@ -100,6 +101,19 @@ export default function AuthProvider({children}:{children:ReactNode}) {
             return
         } 
         getPaymentStatus(userData.user.id, userData.session.access_token)
+    }, [userData])
+    
+    // profile data refresher
+    useEffect(() => {
+        let interval:NodeJS.Timeout;
+        if (userData) {
+            const id = userData.user.id;
+            const jwt = userData.session.access_token;
+            interval = setInterval(() => {
+                ProfileFetch.updatePortfolio(id,jwt)
+            }, 1800000)
+        }
+        return () => clearInterval(interval)
     }, [userData])
 
     return (

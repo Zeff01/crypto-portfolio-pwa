@@ -1,6 +1,7 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom"
 import Root from "@/layouts/Root"
 import Main from "@/layouts/Main"
+import Auth from "./layouts/Auth"
 import Portfolio from "./pages/Portfolio"
 import Signup from "./pages/Signup"
 import Signin from "./pages/Signin"
@@ -33,8 +34,10 @@ const router = createBrowserRouter(
             </Route>            
             {/* this route is temporary */}
             {/* <Route path="loading" element={<Loading />} />  */}
-            <Route path="signup" element={<Signup />} />
-            <Route path="signin" element={<Signin />} />
+            <Route path="" element={<Auth />}>
+                <Route path="signup" element={<Signup />} />
+                <Route path="signin" element={<Signin />} />
+            </Route>
             {/* <Route path="test" element={<Test />} /> */}
         </Route>
     )

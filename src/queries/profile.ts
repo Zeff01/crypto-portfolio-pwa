@@ -68,6 +68,7 @@ class ProfileQuery {
     }
 
     async updatePortfolio(id:string, jwt:string) {
+        console.log('refreshing portfolio')
         const res = await axios.patch(`${API_URL}/api/profile/portfolio/${id}`, 
         {},
         {

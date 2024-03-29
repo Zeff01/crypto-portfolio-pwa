@@ -5,8 +5,9 @@ import { Suspense } from "react";
 import LatestLoading from "./LatestLoading";
 
 
-
 export default function Latest() {
+
+
     const {globalMetrics} = useLoaderData() as {globalMetrics: Promise<any>}
 
 

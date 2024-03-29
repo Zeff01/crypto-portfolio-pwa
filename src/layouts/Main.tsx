@@ -5,9 +5,24 @@ import ThemeToggler from "@/components/common/ThemeToggler";
 import Settings from "@/components/common/Settings";
 import { useRef } from "react";
 import { motion } from 'framer-motion'
+import { useEffect } from "react";
+import { userUserData } from "@/hooks/useUserData";
+import { useNavigate } from "react-router-dom";
 
 export default function Main() {
     const settingsRef = useRef<HTMLButtonElement>(null)
+    
+    const navigate = useNavigate()
+    const userData = userUserData(s => s.userData)
+    
+    useEffect(() => {
+        // user is not logged in, and the path is neither /signup and /signin
+        if (!userData) {
+            console.log('user not logged in redirect to signin page')
+            navigate('/signin', {replace:true})
+        }
+    }, [userData])
+
 
     return (
         <motion.div
