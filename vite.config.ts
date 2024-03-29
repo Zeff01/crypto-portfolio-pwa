@@ -483,8 +483,8 @@ export default defineConfig({
       "sizes": "1024x1024"
     }
     ],
-    theme_color:'#171717',
-    background_color:'#f0e7db',
+    theme_color:'#d3efe9',
+    background_color:'#d3efe9',
     display:"standalone",
     scope:'/',
     start_url:"/",

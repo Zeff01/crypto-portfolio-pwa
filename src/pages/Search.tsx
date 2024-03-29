@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { safeToFixed } from "@/lib/helpers";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { userUserData } from "@/hooks/useUserData";
+import { useToast } from "@/components/ui/use-toast";
 
 
 export default function Search() {
@@ -33,6 +34,8 @@ export default function Search() {
     const userData  = userUserData(s => s.userData)
     const navigate = useNavigate()
 
+    const {toast} = useToast()
+
     const debouncedSearch = debounce(async (query, abort:AbortController) => {
         if (!query) return setCoinList([]);
         try {
@@ -40,7 +43,7 @@ export default function Search() {
             const results = await CoinFetch.searchWithDetails(query, abort);
             const data = results.data as CoinData[]
             setCoinList(data);
-        } catch (error) {
+        } catch (error) {            
             console.error(error);
         } finally {
               setLoading(false);
@@ -65,8 +68,17 @@ export default function Search() {
             if (res.status === 201) {                
                 navigate('/portfolio')
             }
-        } catch (error) {
+            // TODO: add propert types here
+        } catch (error:any) {
             console.error(error)
+            const errMsg : string = error?.response?.data?.error;
+            if (errMsg.includes("You already have")) {
+                toast({
+                    title: 'Duplicate coin detected',
+                    description: `you already ${selectedCoin.name} in your portfolio, update it instead.`,
+                })
+            }
+
         }
       }
 
