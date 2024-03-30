@@ -1,17 +1,11 @@
-import { useEffect } from "react"
-import { useNavigate, useRouteError, } from "react-router-dom"
-import Button from "./Button"
+import { useNavigate } from "react-router-dom"
+import { Button } from "../ui/button"
 
-export default function RootErrorBoundary() {
-    const error = useRouteError()
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        console.log(error)
-    }, [error])
+export default function BalanceError() {
+    const navigate =  useNavigate()
 
     return (
-        <div className="py-6 px-4">
+        <div className="h-[250px] bg-custom-white dark:bg-custom-darkbackground shadow-lg w-full flex flex-col justify-between py-8 px-6 rounded-lg border border-transparent dark:border-gray-700">
             <p>something went wrong...</p>
             <Button 
             className="px-0 w-fit text-lg bg-transparent hover:bg-transparent dark:bg-transparent underline" variant={"link"}

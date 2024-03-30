@@ -14,7 +14,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
-  } from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog"
   
 
 
@@ -23,13 +23,17 @@ interface CoinAccordionProps extends PortfolioItem {
 }
 
 
-export default function CoinAccordion({id, coinId, coinImage, coinName, currentPrice, priceChangePercentage}:CoinAccordionProps) {
+export default function CoinAccordion({id, coinId, coinImage, coinName, currentPrice, priceChangePercentage, shares}:CoinAccordionProps) {
     const exchangeRate = useExchangeRate(s => s.exchangeRate)
 
     const price = currentPrice < 1 ? currentPrice.toFixed(8) : Number(safeToFixed(currentPrice)).toLocaleString()
 
-    const phpCurrentPrice = currentPrice * exchangeRate
-    const phpPrice = phpCurrentPrice < 1 ? phpCurrentPrice.toFixed(8) : Number(safeToFixed(phpCurrentPrice)).toLocaleString()
+    const total = currentPrice * shares    
+    const totalUSD =  total < 1 ? total.toFixed(8) : Number(safeToFixed(total)).toLocaleString()
+    const totalPHP = total * exchangeRate < 1 ? (total * exchangeRate).toFixed(8) : Number(safeToFixed(total * exchangeRate)).toLocaleString()
+
+    // const phpCurrentPrice = currentPrice * exchangeRate
+    // const phpPrice = phpCurrentPrice < 1 ? phpCurrentPrice.toFixed(8) : Number(safeToFixed(phpCurrentPrice)).toLocaleString()
 
     const navigate = useNavigate()
     const fetcher = useFetcher()
@@ -39,29 +43,29 @@ export default function CoinAccordion({id, coinId, coinImage, coinName, currentP
         <div className="pb-4"
         >
             <div>
-                <div className="w-screen pe-10 font-[500] text-sm"> {/**<--- this styles is needed for horizontal scrollbar when overflowing */}
-                    <div className="bg-white dark:bg-custom-card w-full h-full py-4 px-1 flex flex-row gap-x-4 overflow-x-scroll justify-between shadow-md rounded-md"
+                <div className="w-screen pe-8 font-[500] text-sm"> {/**<--- this styles is needed for horizontal scrollbar when overflowing */}
+                    <div className="bg-white dark:bg-custom-card w-full h-full py-4 px-1 flex flex-row gap-x-2 overflow-x-scroll shadow-md rounded-md"
                     role="button"
                     tabIndex={0}
                     >
-                        <div className="w-[80px] flex flex-col items-center justify-between">
-                            <div className="w-[50px] h-[50px] bg-slate-400 shadow-sm rounded-full overflow-hidden">
-                                <img src={coinImage} width={50} height={50} />
+                        <div className="w-[70px] flex flex-col items-center justify-center gap-y-1">
+                            <div className="w-[40px] h-[40px] bg-slate-400 shadow-sm rounded-full overflow-hidden">
+                                <img src={coinImage} width={40} height={40} />
                             </div>
-                            <p className="justify-self-end">{coinName}</p>
+                            <p className={`justify-self-end ${coinName.length > 10 ? "text-[12px]" : "text-sm"}`}>{coinName}</p>
                         </div>
                         <div className="flex flex-col justify-between py-3 items-start">
                             <p className="flex flex-row gap-1 items-baseline">
-                                <span>{price}</span>
+                                <span>{totalUSD}</span>
                                 <span className="text-[10px] text-custom-text">USD</span>
                             </p>
                             <p className="flex flex-row gap-1 items-baseline">
-                                <span>{phpPrice}</span>
+                                <span>{totalPHP}</span>
                                 <span className="text-[10px] text-custom-text">PHP</span>
                             </p>
                         </div>
-                        <div className="flex flex-col justify-between py-3 items-end">
-                            <p>$ ${100}</p>
+                        <div className="ms-auto flex flex-col justify-between py-3 items-end">
+                            <p className="text-nowrap">$ {price}</p>
                             <div className={`${priceChangePercentage < 0 ? "text-custom-destructive": "text-custom-teal"} flex flex-row items-center`}>
                             {
                                 priceChangePercentage < 0 ? 
@@ -75,7 +79,7 @@ export default function CoinAccordion({id, coinId, coinImage, coinName, currentP
                            
                             <AlertDialog>
                                 <AlertDialogTrigger asChild>
-                                    <div role="button" tabIndex={0} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3">
+                                    <div role="button" tabIndex={0} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-2">
                                         <IoClose className="fill-custom-destructive" />
                                     </div>
                                 </AlertDialogTrigger>
@@ -112,7 +116,7 @@ export default function CoinAccordion({id, coinId, coinImage, coinName, currentP
                                     </AlertDialogFooter>
                                 </AlertDialogContent>
                             </AlertDialog>
-                            <div role="button" tabIndex={0} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-3"
+                            <div role="button" tabIndex={0} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-2"
                             onClick={() => navigate(`${coinId}`)}
                             >
                                 <IoChevronForward className="stroke-custom-teal" />

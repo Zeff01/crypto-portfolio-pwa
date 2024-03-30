@@ -5,6 +5,7 @@ import CoinAccordion from "./CoinAccordion";
 import { Await, useLoaderData } from "react-router-dom";
 import { PortfolioItem } from "@/types";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import CoinListError from "./CoinListError";
 import { listTypeStore } from "@/hooks/useListType";
 
 export  default function CoinList() {
@@ -28,7 +29,8 @@ export  default function CoinList() {
                     </div>
             }
                 >
-                    <Await resolve={portfolioPromise}>
+                    <Await resolve={portfolioPromise} errorElement={<CoinListError />}>
+                        
                         {(res) => {
                             const portfolioCoins : PortfolioItem[] = res.data.data
                             return (
@@ -52,7 +54,7 @@ export  default function CoinList() {
                         </div>  
                     </div>
                 }>
-                    <Await resolve={portfolioPromise}>
+                    <Await resolve={portfolioPromise} errorElement={<CoinListError />}>
                     {(res) => {
                             const portfolioCoins : PortfolioItem[] = res.data.data
                             return (
