@@ -11,6 +11,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { userUserData } from "@/hooks/useUserData"
 import { FaRegEdit, FaCheckCircle, } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
+import RootErrorBoundary from "@/components/common/RootErrorBoundary"
 
 
 export default function CoinScreen() {
@@ -44,7 +45,7 @@ export default function CoinScreen() {
                 </div>
             </div>
         }>
-            <Await resolve={portfolioPromise}>
+            <Await resolve={portfolioPromise}  errorElement={<RootErrorBoundary />}>
                 {(res) => {
                     const coinData = res.data.data as PortfolioItem
 

@@ -3,6 +3,7 @@ import Coin from "./Coin";
 import { Await, useLoaderData } from "react-router-dom";
 import CoinLoading from "./CoinLoading";
 import { Suspense } from "react";
+import HomeErrorElement from "./HomeErrorElement";
 
 
 const loadingArr = Array.from({length:10})
@@ -22,7 +23,7 @@ export default function Trending() {
                     })}
                     </>
                 }>
-                    <Await resolve={trendingTokens}>
+                    <Await resolve={trendingTokens} errorElement={<HomeErrorElement type="trending" />}>
                         {
                             (res) => {
                                 const trendingTokens = res.data as TrendingToken[]
