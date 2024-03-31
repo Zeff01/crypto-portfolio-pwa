@@ -92,7 +92,7 @@ export default forwardRef(function Settings(_,ref:ForwardedRef<HTMLButtonElement
                                 <MdPrivacyTip className="fill-custom-black dark:fill-custom-teal" />
                             </div>
 
-                            <p>Privacy And Security</p>
+                            <a target="_blank" href="https://crypto-privacy-policy.vercel.app/">Privacy And Security</a>
                         </div>
                         <div className="flex flex-row gap-x-6 items-center">
                             <div  className="aspect-square rounded-full flex items-center justify-center bg-gray-200 dark:bg-custom-card p-2">
