@@ -12,8 +12,8 @@ export default function Signin() {
             <SigninForm />
             <div className="flex flex-col items-center gap-y-2 text-sm">
                 <p className="text-custom-text">Don’t Have an Account Yet?</p>
-                <p className="text-custom-black dark:text-custom-teal">Create Account   </p>
-                <Link to="/" className="pb-6 text-custom-text underline">Back to home</Link>
+                <Link to="/signup" className="text-custom-black dark:text-custom-teal">Create Account   </Link>
+                {/* <Link to="/" className="pb-6 text-custom-text underline">Back to home</Link> */}
             </div>
         </div>
     )
