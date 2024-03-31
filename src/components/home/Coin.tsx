@@ -4,7 +4,7 @@ import { TrendingToken } from "@/types"
 
 interface CoinProps extends TrendingToken {}
 
-export default function Coin({name, quote, iconUrl, symbol}:CoinProps) {
+export default function Coin({quote, iconUrl, symbol}:CoinProps) {
     // if  (!name || !quote || !quote?.USD) {
     //     return null
     // }
