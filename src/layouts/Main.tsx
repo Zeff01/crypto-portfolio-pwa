@@ -50,18 +50,18 @@ export default function Main() {
             <div className="flex-grow overflow-y-scroll overflow-x-hidden bg-custom-background dark:bg-custom-darkbackground">
             <Outlet />
             </div>
-            <nav className=" bg-custom-background dark:bg-custom-darkbackground h-16 z-10  w-full flex flex-row border-t border-custom-border py-2">
-                <NavLink to="" className={({isActive}) => `${isActive? "text-custom-teal":  ""} basis-1/2 flex flex-col gap-y-1 items-center justify-center`}>
-                    <div>
-                        <HiHome />
-                    </div>
-                    <p>Home</p>
-                </NavLink>
+            <nav className=" bg-custom-background dark:bg-custom-darkbackground h-16 z-10  w-full flex flex-row border-t border-custom-border py-2">                
                 <NavLink to="portfolio" className={({isActive}) => `${isActive? "text-custom-teal":  ""} basis-1/2 flex flex-col gap-y-1 items-center justify-center`}>
                     <div>
                         <FaBriefcase />
                     </div>
                     <p>Portfolio</p>
+                </NavLink>
+                <NavLink to="" className={({isActive}) => `${isActive? "text-custom-teal":  ""} basis-1/2 flex flex-col gap-y-1 items-center justify-center`}>
+                    <div>
+                        <HiHome />
+                    </div>
+                    <p>Home</p>
                 </NavLink>
             </nav>
         </motion.div>

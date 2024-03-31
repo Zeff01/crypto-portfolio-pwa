@@ -11,17 +11,7 @@ import BalanceError from "./BalanceError";
 
 export default function Balance() {
     const {budgetPromise, portfolioPromise} = useLoaderData() as {budgetPromise:Promise<number>; portfolioPromise:Promise<any>}
-    const exchangeRate = useExchangeRate(s => s.exchangeRate)
-    const fetcher = useFetcher()    
-    const state = fetcher.state // checks when updating balance
-    const changeBalance = fetcher.submit
 
-    const [showBudgetInput, setShowBudgetInput] = useState(false)
-    const  [currentBudget, setCurrentBudget] = useState(0) // for input onchange
-
-    function toggleBudgetInput() {
-        setShowBudgetInput(b => !b)
-    }
 
 
 
@@ -29,8 +19,19 @@ export default function Balance() {
         <Suspense fallback={<BalanceLoading />}>
             <Await resolve={Promise.all([budgetPromise, portfolioPromise]).then(r => r)} errorElement={<BalanceError />}>
                 {(res) => {
+                    const exchangeRate = useExchangeRate(s => s.exchangeRate)
+                    const fetcher = useFetcher()    
+                    const state = fetcher.state // checks when updating balance
+                    const changeBalance = fetcher.submit
+                
+                    const [showBudgetInput, setShowBudgetInput] = useState(false)
+                    const  [currentBudget, setCurrentBudget] = useState(0) // for input onchange
+                
+                    function toggleBudgetInput() {
+                        setShowBudgetInput(b => !b)
+                    }
+
                     const [budgeRes,  portfolioRes] = res as [any, any]
-                    console.log({budgeRes})
                     const data = portfolioRes.data.data as PortfolioItem[];
                     const total = data.reduce((acc,curr) => acc + curr.totalHoldings , 0)
                     const phpTotal = total * exchangeRate
@@ -38,7 +39,6 @@ export default function Balance() {
                     const phpBudget = budget * exchangeRate
                     const totalRoi = (data.reduce((acc,curr) =>  acc + curr.trueBudgetPerCoin,0)) * 70
                     const phpTotalRoi = totalRoi * exchangeRate
-                    console.log({budget})
                     useEffect(() => {
                         setCurrentBudget(budget)                                    
                         toggleBudgetInput()
