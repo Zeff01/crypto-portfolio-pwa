@@ -4,7 +4,7 @@ import { TrendingToken } from "@/types"
 
 interface CoinProps extends TrendingToken {}
 
-export default function Coin({name, quote, iconUrl}:CoinProps) {
+export default function Coin({name, quote, iconUrl, symbol}:CoinProps) {
     // if  (!name || !quote || !quote?.USD) {
     //     return null
     // }
@@ -22,7 +22,7 @@ export default function Coin({name, quote, iconUrl}:CoinProps) {
                     <img src={iconUrl} width={28} height={28} />
                 </div>
                 <div className="font-[500]">
-                    <p>{name}</p>
+                    <p>{symbol}</p>
                     <p>${formattedPrice}</p>
                 </div>
             </div>

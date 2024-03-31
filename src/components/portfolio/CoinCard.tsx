@@ -7,7 +7,7 @@ interface CoinCardProps extends PortfolioItem  {
     index: number
 } 
 
-export default function CoinCard( {coinId, coinName, currentPrice, priceChangePercentage, index, coinImage}:CoinCardProps) {
+export default function CoinCard( {coinId, coinSymbol, currentPrice, priceChangePercentage, index, coinImage}:CoinCardProps) {
     const  navigate = useNavigate()
 
     const price = currentPrice < 1 ? currentPrice.toFixed(8) : Number(safeToFixed(currentPrice)).toLocaleString()
@@ -24,7 +24,7 @@ export default function CoinCard( {coinId, coinName, currentPrice, priceChangePe
                     <div className="w-[20px] h-[20px] bg-slate-400 shadow-sm rounded-full overflow-hidden">
                         <img src={coinImage} width={20} height={20} />
                     </div>
-                    <p className="text-nowrap">{coinName}</p>
+                    <p className="text-nowrap">{coinSymbol}</p>
                 </div>
                 <div>
                     <div className="flex flex-row items-end">

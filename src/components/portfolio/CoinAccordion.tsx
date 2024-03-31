@@ -23,7 +23,7 @@ interface CoinAccordionProps extends PortfolioItem {
 }
 
 
-export default function CoinAccordion({id, coinId, coinImage, coinName, currentPrice, priceChangePercentage, shares}:CoinAccordionProps) {
+export default function CoinAccordion({id, coinId, coinImage, coinSymbol, currentPrice, priceChangePercentage, shares}:CoinAccordionProps) {
     const exchangeRate = useExchangeRate(s => s.exchangeRate)
 
     const price = currentPrice < 1 ? currentPrice.toFixed(8) : Number(safeToFixed(currentPrice)).toLocaleString()
@@ -52,7 +52,7 @@ export default function CoinAccordion({id, coinId, coinImage, coinName, currentP
                             <div className="w-[40px] h-[40px] bg-slate-400 shadow-sm rounded-full overflow-hidden">
                                 <img src={coinImage} width={40} height={40} />
                             </div>
-                            <p className={`justify-self-end ${coinName.length > 10 ? "text-[12px]" : "text-sm"}`}>{coinName}</p>
+                            <p className={`justify-self-end ${coinSymbol.length > 10 ? "text-[12px]" : "text-sm"}`}>{coinSymbol}</p>
                         </div>
                         <div className="flex flex-col justify-between py-3 items-start">
                             <p className="flex flex-row gap-1 items-baseline">
@@ -85,7 +85,7 @@ export default function CoinAccordion({id, coinId, coinImage, coinName, currentP
                                 </AlertDialogTrigger>
                                 <AlertDialogContent>
                                     <AlertDialogHeader>
-                                    <AlertDialogTitle>Delete {coinName}?</AlertDialogTitle>
+                                    <AlertDialogTitle>Delete {coinSymbol}?</AlertDialogTitle>
                                     <AlertDialogDescription>
                                         This action cannot be undone. This will delete the coin records from our servers.
                                     </AlertDialogDescription>
