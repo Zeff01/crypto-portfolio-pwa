@@ -33,6 +33,10 @@ export default forwardRef(function Settings(_,ref:ForwardedRef<HTMLButtonElement
             const res = await AuthFetch.signout()
             if (res.status === 200) {
                 remove()
+                // user signed out
+                localStorage.removeItem('session')
+                localStorage.removeItem('jwt')
+                localStorage.removeItem('id')
                 navigate('/signin')
             }
         } catch (error) {

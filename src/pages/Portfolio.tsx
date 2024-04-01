@@ -1,6 +1,6 @@
 import Balance from "@/components/portfolio/Balance";
 import CoinList from "@/components/portfolio/CoinList";
-import SignedOut from "@/components/portfolio/SignedOut";
+// import SignedOut from "@/components/portfolio/SignedOut";
 import { userUserData } from "@/hooks/useUserData";
 
 export default function Portfolio() {
@@ -8,9 +8,10 @@ export default function Portfolio() {
 
     if (!userData) {
         return (
-            <div className="bg-custom-background  px-4  dark:bg-custom-darkbackground py-6">
-                <SignedOut />
-            </div>
+            null
+            // <div className="bg-custom-background  px-4  dark:bg-custom-darkbackground py-6">
+            //     <SignedOut />
+            // </div>
         )
     }
 

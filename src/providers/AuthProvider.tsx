@@ -5,6 +5,8 @@ import { Session, User } from "@supabase/supabase-js";
 import { AuthFetch } from "@/queries";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
 import { ProfileFetch } from "@/queries";
+import AppLoading from "@/components/common/AppLoading";
+import { debounce } from "lodash";
 
 const AuthContext = createContext<{appLoading:boolean; showIsPaidModal:boolean}>({appLoading:true, showIsPaidModal: false})
 
@@ -17,22 +19,50 @@ export default function AuthProvider({children}:{children:ReactNode}) {
     const userData = userUserData(s => s.userData)
     const updateExchangeRate = useExchangeRate(s => s.updateExchangeRate)
 
-    async function refreshSession(session:Session) {
-        try {
-            const res = await AuthFetch.refresh(session)
-            if (res.status === 201) {
-                const data  = res.data as {user:User, session:Session}                                
-                await ProfileFetch.updatePortfolio(data.user.id, data.session.access_token)
-                save(data)                                
+    async function refreshSession() {
+        console.log('refreshing session...')
+        const sessionStr = localStorage.getItem('session') as string
+        if (sessionStr) {
+            try {            
+                setAppLoading(true)
+                const session = JSON.parse(sessionStr)
+                const res = await AuthFetch.refresh(session)
+                if (res.status === 201) {
+                    const data  = res.data as {user:User, session:Session}                                                    
+
+                    //--------------------------------------------------------------------------
+                    // this nested trycatch is to protect the app from unnecessary crash
+                    try {
+                        // this sometimes fails in strict mode idk maybe because of batch write?
+                        await ProfileFetch.updatePortfolio(data.user.id, data.session.access_token)                    
+                    } catch (error) {
+                        console.error('failed to update portfolio', error)
+                    }
+                    try {
+                        await getUserInfo(data.user.id, data.session.access_token)                        
+                    } catch (error) {
+                        console.log('failed to get user info')
+                    }
+                    //-----------------------------------------------------------------------------
+                    console.log('session found')
+                    localStorage.setItem('session', JSON.stringify(data.session))
+                    localStorage.setItem('id', data.user.id)
+                    localStorage.setItem('jwt', data.session.access_token)
+                    save(data)                                
+                }
+            } catch (error) {
+                console.log('user not logged in')
+                localStorage.removeItem('session')
+                localStorage.removeItem('jwt')
+                localStorage.removeItem('id')
+            } finally {
+                setAppLoading(false)
             }
-        } catch (error) {
-            console.log('user not logged in')
-            localStorage.removeItem('session')
-            localStorage.removeItem('jwt')
-            localStorage.removeItem('id')
-        } finally {
-            setAppLoading(false)
+            return
         }
+        console.log('session not found')
+        setAppLoading(false)
+        
     }
 
     async function getPaymentStatus(id:string, jwt:string) {
@@ -59,15 +89,11 @@ export default function AuthProvider({children}:{children:ReactNode}) {
 
     // session refresher
     useEffect(() => {        
-        const sessionStr = localStorage.getItem('session') as string
-        const session = JSON.parse(sessionStr)
-        refreshSession(session ?? undefined) 
+        refreshSession()        
     }, [])
 
-    async function getUserInfo(userData: {session:Session; user: User}) {
-        const jwt = userData?.session?.access_token
-        const id = userData?.user?.id
-        if (!jwt || !id) return null;
+    async function getUserInfo(id:string, jwt:string) {        
+        if (!jwt || !id) return 
         try {
             const res = await ProfileFetch.getUserInfo(id, jwt)
             if  (res.status === 200) {
@@ -78,21 +104,16 @@ export default function AuthProvider({children}:{children:ReactNode}) {
         }
     }
 
-    // localstorage data remover
-    useEffect(() => {
-        // user signed in
+    const debouncedUpdatePortfolio = debounce((obj:any) => {
         if (userData) {
-            localStorage.setItem('session', JSON.stringify(userData.session))
-            localStorage.setItem('jwt', userData.session.access_token)
-            localStorage.setItem('id', userData.user.id)
-            getUserInfo(userData)
-            return
+            const id = userData.user.id;
+            const jwt = userData.session.access_token;
+            obj.interval = setInterval(() => {
+                ProfileFetch.updatePortfolio(id,jwt)
+            }, 1_800_000)
         }
-        // user signed out
-        localStorage.removeItem('session')
-        localStorage.removeItem('jwt')
-        localStorage.removeItem('id')
-    }, [userData])
+    }, 1800_000)
+
 
     // checks the userdata and show the modal if unpaid
     useEffect(() => {
@@ -105,20 +126,21 @@ export default function AuthProvider({children}:{children:ReactNode}) {
     
     // profile data refresher
     useEffect(() => {
-        let interval:NodeJS.Timeout;
-        if (userData) {
-            const id = userData.user.id;
-            const jwt = userData.session.access_token;
-            interval = setInterval(() => {
-                ProfileFetch.updatePortfolio(id,jwt)
-            }, 1800000)
-        }
-        return () => clearInterval(interval)
+        const objInterval = {
+            interval:undefined
+        } as {interval:any}
+            
+        debouncedUpdatePortfolio(objInterval)
+        return () => clearInterval(objInterval.interval)
     }, [userData])
 
     return (
         <AuthContext.Provider value={{appLoading, showIsPaidModal}}>
-            {children}
+            {
+            appLoading ?
+            <AppLoading /> :
+            children
+            }
         </AuthContext.Provider>
     )
 }

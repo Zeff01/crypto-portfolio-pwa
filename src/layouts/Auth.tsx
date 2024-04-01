@@ -15,6 +15,9 @@ export default function Auth() {
         }
     }, [userData])
 
+    if (userData) {
+        return null;
+    }
 
     return (
         <>

@@ -34,6 +34,9 @@ export default function SigninForm() {
             const res = await AuthFetch.login({email,password})
             if (res.status === 200) {
                 const data : {user: User, session:Session} = res.data
+                localStorage.setItem('session', JSON.stringify(data.session))
+                localStorage.setItem('id', data.user.id)
+                localStorage.setItem('jwt', data.session.access_token)
                 save(data)
                 navigate('/')
             }
