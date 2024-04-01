@@ -80,6 +80,7 @@ export default function AuthProvider({children}:{children:ReactNode}) {
 
     // exchange rate checker
     useEffect(() => {
+        console.log('exchange rate checker useEffect')
         try {
             updateExchangeRate()            
         } catch (error) {
@@ -89,6 +90,7 @@ export default function AuthProvider({children}:{children:ReactNode}) {
 
     // session refresher
     useEffect(() => {        
+        console.log('refresh session useEffect')
         refreshSession()        
     }, [])
 
@@ -117,6 +119,7 @@ export default function AuthProvider({children}:{children:ReactNode}) {
 
     // checks the userdata and show the modal if unpaid
     useEffect(() => {
+        console.log('payment status useEffect')
         if (!userData) {
             setShowIsPaidModal(false)
             return
@@ -126,6 +129,7 @@ export default function AuthProvider({children}:{children:ReactNode}) {
     
     // profile data refresher
     useEffect(() => {
+        console.log('update portfolio useEffect')
         const objInterval = {
             interval:undefined
         } as {interval:any}

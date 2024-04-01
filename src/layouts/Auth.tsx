@@ -8,6 +8,7 @@ export default function Auth() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        console.log('signin redirect useEffect')
         console.log({userData})
         if (userData) {
             console.log('a user is logged in')

@@ -84,6 +84,7 @@ export default function Search() {
       }
 
       useEffect(() => {
+        console.log('search query useEffect')
         const controller = new AbortController()
         debouncedSearch(query, controller);
         return () => {

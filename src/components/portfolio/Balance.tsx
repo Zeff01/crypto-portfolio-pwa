@@ -38,12 +38,14 @@ export default function Balance() {
     }
 
     useEffect(() => {
+        console.log('change budget loading useEffect')
         if (state === 'loading') {
             setIsLoading(true)
         }
     }, [state])
 
     useEffect(() => {
+        console.log('isLoading useEffect')
         if (isLoading) {
             toggleBudgetInput()
         }

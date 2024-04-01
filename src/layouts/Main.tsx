@@ -16,6 +16,7 @@ export default function Main() {
     const userData = userUserData(s => s.userData)
     
     useEffect(() => {
+        console.log('not logged in redirect useEffect')
         // user is not logged in, and the path is neither /signup and /signin
         if (!userData) {
             console.log('user not logged in redirect to signin page')

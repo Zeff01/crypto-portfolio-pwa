@@ -7,6 +7,7 @@ export default function RootErrorBoundary() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        console.log('error boundary useEffect')
         console.log(error)
     }, [error])
 
