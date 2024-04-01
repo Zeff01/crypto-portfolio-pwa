@@ -10,11 +10,11 @@ export async function profileLoader() {
     }
     ProfileFetch.updatePortfolio(id,jwt)
 
-    const budgetPromise = ProfileFetch.getBudget(id,jwt)
-    const portfolioPromise = ProfileFetch.getPortfolioData(id,jwt)
+    const data = Promise.all([ProfileFetch.getBudget(id,jwt), ProfileFetch.getPortfolioData(id,jwt)])
+    // const budgetPromise = ProfileFetch.getBudget(id,jwt)
+    // const portfolioPromise = ProfileFetch.getPortfolioData(id,jwt)
     return defer({
-        budgetPromise,
-        portfolioPromise
+        data
     })
 
 }

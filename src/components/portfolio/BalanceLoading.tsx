@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 
 export default function BalanceLoading() {
     return (
-        <div className=" bg-custom-white dark:bg-custom-darkbackground shadow-lg w-full flex flex-col justify-between py-8 px-6 rounded-lg border border-transparent dark:border-gray-700">
+        <>
             <p className="text font-[500]">Balance</p>            
             <div>
                 <p>
@@ -35,6 +35,6 @@ export default function BalanceLoading() {
             <Button disabled={true} variant={"ghost"} size={"icon"} className="ms-auto border-none hover:bg-transparent active:bg-transparent">
                     <FaRegEdit className="text-xl" />
             </Button>
-        </div>
+        </>
     )
 }

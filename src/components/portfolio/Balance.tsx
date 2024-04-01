@@ -10,27 +10,52 @@ import BalanceLoading from "./BalanceLoading";
 import BalanceError from "./BalanceError";
 
 export default function Balance() {
-    const {budgetPromise, portfolioPromise} = useLoaderData() as {budgetPromise:Promise<number>; portfolioPromise:Promise<any>}
+    const {data} = useLoaderData() as {data: [Promise<any>, Promise<any>]}
+    const exchangeRate = useExchangeRate(s => s.exchangeRate)
 
+    const fetcher = useFetcher()
+    const state = fetcher.state // checks when updating balance
+    const changeBalance = fetcher.submit
 
+    const [showBudgetInput, setShowBudgetInput] = useState(false)
+    const  [currentBudget, setCurrentBudget] = useState(0) // for input onchange    
+    const [isLoading, setIsLoading] = useState(false)
+
+    function toggleBudgetInput() {
+        setShowBudgetInput(b => !b)
+        setIsLoading(false)
+    }
+
+    async function handleSubmit() {
+        try {
+            changeBalance({type: 'change_balance', newBudget: currentBudget}, {
+                method: 'PATCH',
+                action: ''
+            })
+        } catch (error) {
+            console.error('error changing budget')
+        }        
+    }
+
+    useEffect(() => {
+        if (state === 'loading') {
+            setIsLoading(true)
+        }
+    }, [state])
+
+    useEffect(() => {
+        if (isLoading) {
+            toggleBudgetInput()
+        }
+    }, [isLoading])
 
 
     return (
+        <div className=" bg-custom-white dark:bg-custom-darkbackground shadow-lg w-full flex flex-col justify-between py-8 px-6 rounded-lg border border-transparent dark:border-gray-700">                            
         <Suspense fallback={<BalanceLoading />}>
-            <Await resolve={Promise.all([budgetPromise, portfolioPromise]).then(r => r)} errorElement={<BalanceError />}>
+            <Await resolve={data} errorElement={<BalanceError />}>
                 {(res) => {
-                    const exchangeRate = useExchangeRate(s => s.exchangeRate)
-                    const fetcher = useFetcher()    
-                    const state = fetcher.state // checks when updating balance
-                    const changeBalance = fetcher.submit
-                
-                    const [showBudgetInput, setShowBudgetInput] = useState(false)
-                    const  [currentBudget, setCurrentBudget] = useState(0) // for input onchange
-                
-                    function toggleBudgetInput() {
-                        setShowBudgetInput(b => !b)
-                    }
-
+                    console.log({res})        
                     const [budgeRes,  portfolioRes] = res as [any, any]
                     const data = portfolioRes.data.data as PortfolioItem[];
                     const total = data.reduce((acc,curr) => acc + curr.totalHoldings , 0)
@@ -39,13 +64,10 @@ export default function Balance() {
                     const phpBudget = budget * exchangeRate
                     const totalRoi = (data.reduce((acc,curr) =>  acc + curr.trueBudgetPerCoin,0)) * 70
                     const phpTotalRoi = totalRoi * exchangeRate
-                    useEffect(() => {
-                        setCurrentBudget(budget)                                    
-                        toggleBudgetInput()
-                    }, [budget])
+                    // budgetRef.current = budget
                     
                     return (
-                        <div className=" bg-custom-white dark:bg-custom-darkbackground shadow-lg w-full flex flex-col justify-between py-8 px-6 rounded-lg border border-transparent dark:border-gray-700">                            
+                        <>
                             <p className="text font-[500]">Balance</p>
                             <div>
                                 <p>
@@ -78,36 +100,33 @@ export default function Balance() {
                                 <Button variant={"ghost"} size={"icon"} className="ms-auto border-none hover:bg-transparent active:bg-transparent" onClick={toggleBudgetInput}>
                                     <FaRegEdit className="text-xl" />
                                 </Button>
-                            </div>
-                            {
-                                showBudgetInput &&
-                                <div className="pt-4 flex flex-col gap-y-1">
-                                    <p>Enter Budget in (USD)</p>
-                                    <div className="flex flex-row gap-x-2">
-                                        <Input type="number" min={0} value={currentBudget} onChange={(e) => setCurrentBudget(Number(e.currentTarget.value))}
-                                        className="bg-transparent dark:bg-transparent w-[200px] border-custom-border"
-                                        />
-                                        <Button 
-                                        type="button"
-                                        variant={"ghost"} 
-                                        size={"icon"} 
-                                        className="border-none hover:bg-transparent active:bg-transparent disabled:opacity-50"
-                                        disabled={state === 'submitting'}
-                                        onClick={() => changeBalance({type: 'change_balance', newBudget: currentBudget}, {
-                                            method: 'PATCH',
-                                            action: ''
-                                        })}
-                                        >
-                                            <FaCheckCircle className={`fill-green-600 text-3xl`} />
-                                        </Button>
-                                    </div>                
-                                </div>
-                            }
-
-                        </div>
+                            </div>                            
+                            </>
                     )
                 }}
             </Await>        
         </Suspense>
+        {
+            showBudgetInput &&
+            <div className="pt-4 flex flex-col gap-y-1">
+                <p>Enter Budget in (USD)</p>
+                <div className="flex flex-row gap-x-2">
+                    <Input type="number" min={0} value={currentBudget} onChange={(e) => setCurrentBudget(Number(e.currentTarget.value))}
+                    className="bg-transparent dark:bg-transparent w-[200px] border-custom-border"
+                    />
+                    <Button 
+                    type="button"
+                    variant={"ghost"} 
+                    size={"icon"} 
+                    className="border-none hover:bg-transparent active:bg-transparent disabled:opacity-50"
+                    disabled={state === 'submitting'}
+                    onClick={handleSubmit}
+                    >
+                        <FaCheckCircle className={`fill-green-600 text-3xl`} />
+                    </Button>
+                </div>                
+            </div>
+        }
+        </div>
     )
 }

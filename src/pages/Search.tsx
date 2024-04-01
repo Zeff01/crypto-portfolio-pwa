@@ -36,6 +36,7 @@ export default function Search() {
 
     const {toast} = useToast()
 
+
     const debouncedSearch = debounce(async (query, abort:AbortController) => {
         if (!query) return setCoinList([]);
         try {
@@ -117,6 +118,9 @@ export default function Search() {
             </div>
             <div className="flex-grow flex flex-col pt-12 ps-4 gap-y-4">
                 {coinList.map(s => {
+                    const currPrice = Number(s.currentPrice)
+                    const formattedCurrentPrice = Number(currPrice) < 1 ? currPrice.toFixed(8) : safeToFixed(currPrice)
+
                     return (
                         <AlertDialog key={s.id}>
                             <AlertDialogTrigger asChild onClick={() => setSelectedCoin(s)}>
@@ -125,7 +129,7 @@ export default function Search() {
                                         <img src={s.logo} width={36} height={36} />
                                     </div>
                                     <p>{s.symbol}</p>
-                                    <p className="ms-auto pe-2 font-[500]">{safeToFixed(s.currentPrice)}</p>
+                                    <p className="ms-auto pe-2 font-[500]">{formattedCurrentPrice}</p>
                                 </div>
                             </AlertDialogTrigger>
                             <AlertDialogContent className="bg-custom-background dark:bg-custom-darkbackground">

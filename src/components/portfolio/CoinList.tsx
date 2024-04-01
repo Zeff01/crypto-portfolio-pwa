@@ -9,7 +9,7 @@ import CoinListError from "./CoinListError";
 import { listTypeStore } from "@/hooks/useListType";
 
 export  default function CoinList() {
-    const {portfolioPromise} = useLoaderData() as {portfolioPromise: Promise<any>}
+    const {data} = useLoaderData() as {data: [Promise<any>, Promise<any>],}
     const listType = listTypeStore(s => s.listType)
     const toggleListType = listTypeStore(s => s.toggleListType)
 
@@ -29,10 +29,10 @@ export  default function CoinList() {
                     </div>
             }
                 >
-                    <Await resolve={portfolioPromise} errorElement={<CoinListError />}>
+                    <Await resolve={data} errorElement={<CoinListError />}>
                         
                         {(res) => {
-                            const portfolioCoins : PortfolioItem[] = res.data.data
+                            const portfolioCoins : PortfolioItem[] = res[1].data.data
                             return (
                                 <>
                                 {portfolioCoins.map((p,i) => {
@@ -54,9 +54,9 @@ export  default function CoinList() {
                         </div>  
                     </div>
                 }>
-                    <Await resolve={portfolioPromise} errorElement={<CoinListError />}>
+                    <Await resolve={data} errorElement={<CoinListError />}>
                     {(res) => {
-                            const portfolioCoins : PortfolioItem[] = res.data.data
+                            const portfolioCoins : PortfolioItem[] = res[1].data.data
                             return (
                                 <>
                                 {portfolioCoins.map((p,i) => {
