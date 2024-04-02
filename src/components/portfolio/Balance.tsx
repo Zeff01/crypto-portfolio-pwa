@@ -63,7 +63,6 @@ export default function Balance() {
         <Suspense fallback={<BalanceLoading prevBudget={prevBudget} prevPortfolio={prevPortfolio} exchangeRate={exchangeRate}  />}>
             <Await resolve={data} errorElement={<BalanceError exchangeRate={exchangeRate} />}>
                 {(res) => {
-                    console.log({res})        
                     const [budgeRes,  portfolioRes] = res as [any, any]
                     const data = portfolioRes.data.data as PortfolioItem[];
                     const total = data.reduce((acc,curr) => acc + curr.totalHoldings , 0)
