@@ -1,16 +1,18 @@
 import { GlobalMetrics } from "@/types"
 import { safeToFixed } from "@/lib/helpers";
 import { Await, useLoaderData } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import LatestLoading from "./LatestLoading";
 import HomeErrorElement from "./HomeErrorElement";
+import { usePrevData } from "@/hooks/usePrevData";
 
 
 export default function Latest() {
 
 
     const {globalMetrics} = useLoaderData() as {globalMetrics: Promise<any>}
-
+    const prevLatest  = usePrevData(s => s.prevLatest)
+    const setPrevLatest  = usePrevData(s => s.setPrevLatest)
 
     
 
@@ -27,13 +29,14 @@ export default function Latest() {
     };
 
     return (
-        <Suspense fallback={<LatestLoading />}>
+        <Suspense fallback={<LatestLoading prevLatest={prevLatest} />}>
             <Await resolve={globalMetrics} errorElement={<HomeErrorElement type="latest" />}>
                 {(res) => {
                     const globalMetrics = res.data.data as GlobalMetrics
 
                     const { total_market_cap, total_volume_24h, total_market_cap_yesterday, total_volume_24h_yesterday } = globalMetrics.quote.USD
                     const {btc_dominance,  btc_dominance_yesterday } = globalMetrics
+                    
 
                     const calculatePercentageChange = (current:number|unknown, previous:number|unknown) => {
                         if (typeof current !== 'number' || typeof previous !== 'number' || previous === 0) {
@@ -46,6 +49,11 @@ export default function Latest() {
                     const marketCapChange = safeToFixed(((total_market_cap - total_market_cap_yesterday) / total_market_cap_yesterday) * 100);
                     const volumeChange = safeToFixed(((total_volume_24h - total_volume_24h_yesterday) / total_volume_24h_yesterday) * 100);
                     const btcDominanceChange = calculatePercentageChange(btc_dominance, btc_dominance_yesterday);
+
+                    useEffect(() => {
+                        // global metrics prevLatest effect
+                        setPrevLatest(globalMetrics)
+                    }, [globalMetrics])
 
                     return (
                         <div className="w-full flex flex-row flex-wrap py-3">
