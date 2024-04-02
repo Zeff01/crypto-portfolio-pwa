@@ -7,6 +7,7 @@ import { userUserData } from "@/hooks/useUserData"
 import { User, Session } from '@supabase/supabase-js'
 import { AuthFetch } from "@/queries"
 import * as yup from 'yup'
+import { useAuthContext } from "@/providers/AuthProvider"
 
 export default function SigninForm() {
     const modalTriggerRef =  useRef<HTMLButtonElement>(null)
@@ -14,6 +15,7 @@ export default function SigninForm() {
     const [searchParams] = useSearchParams()
     const navigate =  useNavigate()
     const save = userUserData(s => s.save)
+    const {getUserInfo} = useAuthContext()
     
     const email = searchParams.get('email')
 
@@ -37,6 +39,7 @@ export default function SigninForm() {
                 localStorage.setItem('session', JSON.stringify(data.session))
                 localStorage.setItem('id', data.user.id)
                 localStorage.setItem('jwt', data.session.access_token)
+                await getUserInfo(data.user.id, data.session.access_token)
                 save(data)
                 navigate('/')
             }

@@ -8,7 +8,14 @@ import { ProfileFetch } from "@/queries";
 import AppLoading from "@/components/common/AppLoading";
 import { debounce } from "lodash";
 
-const AuthContext = createContext<{appLoading:boolean; showIsPaidModal:boolean}>({appLoading:true, showIsPaidModal: false})
+type ContextType = {
+    appLoading:boolean; 
+    showIsPaidModal:boolean, 
+    getUserInfo:(id:string, jwt:string) => Promise<void>;
+    
+}
+
+const AuthContext = createContext<ContextType>({appLoading:true, showIsPaidModal: false, getUserInfo: async () => {}})
 
 export default function AuthProvider({children}:{children:ReactNode}) {
 
@@ -101,14 +108,16 @@ export default function AuthProvider({children}:{children:ReactNode}) {
             const localInfoStr = localStorage.getItem('userInfo') 
             if (localInfoStr) { // if it exist, no need to send a request to server
                 const info = JSON.parse(localInfoStr)
-                return saveInfo(info)
+                saveInfo(info)
+                return
             }
             const res = await ProfileFetch.getUserInfo(id, jwt)
             if  (res.status === 200) {
                 console.log('user info saved!')
                 const infoStr = JSON.stringify(res.data) // save the info to local storage
                 localStorage.setItem('userInfo', infoStr)
-                return saveInfo(res.data)
+                saveInfo(res.data)
+                return
             }
         } catch (error) {
             console.error(error)
@@ -148,7 +157,7 @@ export default function AuthProvider({children}:{children:ReactNode}) {
     }, [userData])
 
     return (
-        <AuthContext.Provider value={{appLoading, showIsPaidModal}}>
+        <AuthContext.Provider value={{appLoading, showIsPaidModal, getUserInfo}}>
             {
             appLoading ?
             <AppLoading /> :
