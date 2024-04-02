@@ -1,6 +1,6 @@
 import { Await, useFetcher, useNavigate } from "react-router-dom"
 import { useLoaderData } from "react-router-dom"
-import { Suspense, useRef, useState } from "react"
+import { Suspense, useState } from "react"
 import { PortfolioItem } from "@/types"
 import { generateTableData } from "@/lib/formatter" 
 import { DataToParse } from "@/lib/formatter"
@@ -32,6 +32,33 @@ export default function CoinScreen() {
         setEditable(e => !e)
     }
 
+    function handleSubmit(coinData:PortfolioItem, shares:number, initialShares:number) {
+        if (shares === initialShares) {
+            toggleEdit()
+            return;
+        }; // when no changes the cancel icon will appear
+        if (shares <= 0) return; // cannot set the shares to zero
+        try {
+            updateShares(
+                {
+                data: JSON.stringify(coinData),
+                shares,
+                formEnctype: 'application/json'                                                                    
+                },
+                {
+                    method:'PUT',
+                    action: '',
+                    
+                }
+            )
+        }         
+        catch (error) {
+            console.error('error encountered when updating coin shares')
+        }  finally {
+            toggleEdit()
+        }
+    }
+
     if (!userData) {
         return null
     }
@@ -50,9 +77,8 @@ export default function CoinScreen() {
                     const coinData = res.data.data as PortfolioItem
 
                     const tableData = generateTableData(coinData, DataToParse, exchangeRate)
-
+                    const initialShares = Number(tableData[0][1])
                     const [shares, setShares] = useState(Number(tableData[0][1]))
-                    const initialShares = useRef(shares)
 
 
                     return (
@@ -97,41 +123,21 @@ export default function CoinScreen() {
                                                     min={0}
                                                     readOnly={!editable}
                                                     />
-                                                    {
-                                                        // user has made changes and is pending
-                                                        (fetcher.state == "submitting" || fetcher.state == "loading") ?
-                                                        <span className="text-xl">
-                                                            <AiOutlineLoading3Quarters className="animate-spin" />
-                                                        </span> :
-                                                        // the user wants to edit but had not made any changes yet
-                                                        editable && initialShares.current === shares ?
-                                                        <span onClick={toggleEdit} className="text-xl">
-                                                            <MdCancel />
-                                                        </span> :                                                 
-                                                        // the user had made changes and had option to confirm the changes       
+                                                    {      
                                                         editable ?
                                                         <span onClick={() => {
                                                             if (fetcher.state === 'idle') {
-                                                                toggleEdit()
-                                                                updateShares(
-                                                                    {
-                                                                    data: JSON.stringify(coinData),
-                                                                    shares,
-                                                                    formEnctype: 'application/json'
-                                                                    
-                                                                    },
-                                                                    {
-                                                                        method:'PUT',
-                                                                        action: '',
-                                                                        
-                                                                    }
-                                                                )                                                              
+                                                                handleSubmit(coinData, shares, initialShares) 
                                                             }
 
                                                         }} 
                                                         className="text-lg"
                                                         >
+                                                            {
+                                                            editable && (shares === initialShares) ? // no changes made
+                                                            <MdCancel className="text-xl" /> :
                                                             <FaCheckCircle />
+                                                            }
                                                         </span> :
                                                         // user is not editing yet
                                                         <span onClick={() => {
@@ -141,7 +147,11 @@ export default function CoinScreen() {
                                                         }} 
                                                         className="text-lg"
                                                         >
-                                                            <FaRegEdit />
+                                                            {
+                                                                fetcher.state === 'submitting' ?
+                                                                <AiOutlineLoading3Quarters className="animate-spin" /> :                                                                
+                                                                <FaRegEdit /> 
+                                                            }
                                                         </span>
                                                     }
                                                 </div>
