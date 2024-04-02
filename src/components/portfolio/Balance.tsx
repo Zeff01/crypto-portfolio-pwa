@@ -61,7 +61,7 @@ export default function Balance() {
     return (
         <div className=" bg-custom-white dark:bg-custom-darkbackground shadow-lg w-full flex flex-col justify-between py-8 px-6 rounded-lg border border-transparent dark:border-gray-700">                            
         <Suspense fallback={<BalanceLoading prevBudget={prevBudget} prevPortfolio={prevPortfolio} exchangeRate={exchangeRate}  />}>
-            <Await resolve={data} errorElement={<BalanceError />}>
+            <Await resolve={data} errorElement={<BalanceError exchangeRate={exchangeRate} />}>
                 {(res) => {
                     console.log({res})        
                     const [budgeRes,  portfolioRes] = res as [any, any]

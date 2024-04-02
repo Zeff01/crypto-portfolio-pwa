@@ -40,13 +40,13 @@ export  default function CoinList() {
                     
             }
                 >
-                    <Await resolve={data} errorElement={<CoinListError />}>
+                    <Await resolve={data} errorElement={<CoinListError type="card" />}>
                         
                         {(res) => {
                             const portfolioCoins : PortfolioItem[] = res[1].data.data
 
                             useEffect(() => {
-                                console.log('coinlist prevportfolio effect')
+                                console.log('coinlist prevpsortfolio effect')
                                 setPrevPortfolio(portfolioCoins)
                             }, [portfolioCoins])
 
@@ -79,7 +79,7 @@ export  default function CoinList() {
                         </div>  
                     </div>
                 }>
-                    <Await resolve={data} errorElement={<CoinListError />}>
+                    <Await resolve={data} errorElement={<CoinListError type="accordion" />}>
                     {(res) => {
                             const portfolioCoins : PortfolioItem[] = res[1].data.data
                             return (
