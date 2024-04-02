@@ -6,6 +6,7 @@ import { generateTableData } from "@/lib/formatter"
 import { DataToParse } from "@/lib/formatter"
 import { useExchangeRate } from "@/hooks/useExchangeRate"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { TbArrowBack } from "react-icons/tb";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { userUserData } from "@/hooks/useUserData"
@@ -112,16 +113,16 @@ export default function CoinScreen() {
                                     const value = r[1];                                    
                                     if (key === 'Shares') {
                                         return (
-                                            <div className="py-3 px-2 flex flex-row items-center justify-between bg-custom-white dark:bg-custom-card rounded-md shadow-md" key={key}>
+                                            <div className="py-3 px-2 flex flex-row items-center justify-between bg-custom-white dark:bg-custom-card rounded-md shadow-md text-custom-black dark:text-custom-white" key={key}>
                                                 <p>{key}</p>
-                                                <div className="relative flex flex-row items-center gap-2">
-                                                    <input 
+                                                <div className="relative flex flex-row items-center gap-3">
+                                                    <Input
                                                     type="number" 
                                                     value={Number(shares)} 
                                                     onChange={(e) => setShares(Number(e.currentTarget.value))}
-                                                    className={`text-right w-fit outline-none bg-transparent dark:bg-transparent ${editable ? "underline underline-offset-4" : ""}`}
+                                                    className={`px-1 text-right w-[150px] outline-none bg-transparent dark:bg-transparent ${editable ? "" : "border-none"}`}
                                                     min={0}
-                                                    readOnly={!editable}
+                                                    contentEditable={editable}
                                                     />
                                                     {      
                                                         editable ?
