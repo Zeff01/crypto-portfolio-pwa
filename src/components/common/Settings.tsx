@@ -37,6 +37,7 @@ export default forwardRef(function Settings(_,ref:ForwardedRef<HTMLButtonElement
                 localStorage.removeItem('session')
                 localStorage.removeItem('jwt')
                 localStorage.removeItem('id')
+                localStorage.removeItem('userInfo')
                 navigate('/signin')
             }
         } catch (error) {

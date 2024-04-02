@@ -97,8 +97,17 @@ export default function AuthProvider({children}:{children:ReactNode}) {
     async function getUserInfo(id:string, jwt:string) {        
         if (!jwt || !id) return 
         try {
+            // try to get to local storage if it is available;
+            const localInfoStr = localStorage.getItem('userInfo') 
+            if (localInfoStr) { // if it exist, no need to send a request to server
+                const info = JSON.parse(localInfoStr)
+                return saveInfo(info)
+            }
             const res = await ProfileFetch.getUserInfo(id, jwt)
             if  (res.status === 200) {
+                console.log('user info saved!')
+                const infoStr = JSON.stringify(res.data) // save the info to local storage
+                localStorage.setItem('userInfo', infoStr)
                 return saveInfo(res.data)
             }
         } catch (error) {
