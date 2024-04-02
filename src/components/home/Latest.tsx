@@ -3,8 +3,8 @@ import { safeToFixed } from "@/lib/helpers";
 import { Await, useLoaderData } from "react-router-dom";
 import { Suspense, useEffect } from "react";
 import LatestLoading from "./LatestLoading";
-import HomeErrorElement from "./HomeErrorElement";
 import { usePrevData } from "@/hooks/usePrevData";
+import LatestError from "./LatestError";
 
 
 export default function Latest() {
@@ -30,7 +30,7 @@ export default function Latest() {
 
     return (
         <Suspense fallback={<LatestLoading prevLatest={prevLatest} />}>
-            <Await resolve={globalMetrics} errorElement={<HomeErrorElement type="latest" />}>
+            <Await resolve={globalMetrics} errorElement={<LatestError />}>
                 {(res) => {
                     const globalMetrics = res.data.data as GlobalMetrics
 

@@ -3,8 +3,9 @@ import Coin from "./Coin";
 import { Await, useLoaderData } from "react-router-dom";
 import CoinLoading from "./CoinLoading";
 import { Suspense, useEffect } from "react";
-import HomeErrorElement from "./HomeErrorElement";
 import { usePrevData } from "@/hooks/usePrevData";
+import CoinError from "./CoinError";
+
 
 
 const loadingArr = Array.from({length:10})
@@ -19,7 +20,7 @@ export default function Trending() {
             <p  className="font-semibold">TRENDING COINS</p>
             <div className="w-full flex  flex-row overflow-x-scroll gap-x-6 py-2">
                 <Suspense fallback={<TrendingLoading prevCoins={prevCoins} />}>
-                    <Await resolve={trendingTokens} errorElement={<HomeErrorElement type="trending" />}>
+                    <Await resolve={trendingTokens} errorElement={<CoinError type="trending" />}>
                         {
                             (res) => {
                                 const trendingTokens = res.data as TrendingToken[]
