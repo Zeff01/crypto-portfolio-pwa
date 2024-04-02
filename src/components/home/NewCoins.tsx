@@ -5,6 +5,7 @@ import { Await, useLoaderData } from "react-router-dom";
 import { Suspense } from "react";
 import HomeErrorElement from "./HomeErrorElement";
 import { usePrevData } from "@/hooks/usePrevData";
+import { cloneDeep } from "lodash";
 
 const loadingArr = Array.from({length:10})
 
@@ -21,7 +22,7 @@ export default function NewCoins() {
                         {
                             (res) => {
                                 const trendingTokens = res.data as TrendingToken[]
-                                const sortedCoins =  trendingTokens.sort((a,b) => b.id - a.id)
+                                const sortedCoins = cloneDeep(trendingTokens).sort((a,b) => b.id - a.id)
                                 // no need useEffect here because it is already in Trending.tsx (they using same data)
                                 return (
                                     <>

@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import BalanceLoading from "./BalanceLoading";
 import BalanceError from "./BalanceError";
+import { usePrevData } from "@/hooks/usePrevData";
 
 export default function Balance() {
     const {data} = useLoaderData() as {data: [Promise<any>, Promise<any>]}
@@ -20,6 +21,11 @@ export default function Balance() {
     const [showBudgetInput, setShowBudgetInput] = useState(false)
     const  [currentBudget, setCurrentBudget] = useState(0) // for input onchange    
     const [isLoading, setIsLoading] = useState(false)
+
+    const prevBudget = usePrevData(s => s.prevBudget)
+    const setPrevBudget = usePrevData(s => s.setPrevBudget)
+    const prevPortfolio = usePrevData(s => s.prevPortfolio)
+    const setPrevPortfolio = usePrevData(s => s.setPrevPortfolio)
 
     function toggleBudgetInput() {
         setShowBudgetInput(b => !b)
@@ -54,7 +60,7 @@ export default function Balance() {
 
     return (
         <div className=" bg-custom-white dark:bg-custom-darkbackground shadow-lg w-full flex flex-col justify-between py-8 px-6 rounded-lg border border-transparent dark:border-gray-700">                            
-        <Suspense fallback={<BalanceLoading />}>
+        <Suspense fallback={<BalanceLoading prevBudget={prevBudget} prevPortfolio={prevPortfolio} exchangeRate={exchangeRate}  />}>
             <Await resolve={data} errorElement={<BalanceError />}>
                 {(res) => {
                     console.log({res})        
@@ -67,6 +73,16 @@ export default function Balance() {
                     const totalRoi = (data.reduce((acc,curr) =>  acc + curr.trueBudgetPerCoin,0)) * 70
                     const phpTotalRoi = totalRoi * exchangeRate
                     // budgetRef.current = budget
+
+                    useEffect(() => {
+                        console.log('prev budget effect')
+                        setPrevBudget(budget)
+                    }, [budget])
+
+                    useEffect(() => {
+                        console.log('prev portfolio effect')
+                        setPrevPortfolio(data)
+                    }, [data])
                     
                     return (
                         <>
