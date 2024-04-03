@@ -28,6 +28,21 @@ class AuthQuery {
         return res
     }
 
+    async requestResetPassword(email:string) {
+        const res = await axios.post(`${API_URL}/api/auth/reset/request`, {email})
+        return res
+    }
+
+    async verifyCode(email:string,code:string) {
+        const res = await axios.post(`${API_URL}/api/auth/reset/verify`, {email,code})
+        return res
+    }
+
+    async confirmResetPassword(email:string, newPassword:string) {
+        const res = await axios.patch(`${API_URL}/api/auth/reset/confirm`, {email, newPassword})
+        return res
+    }
+
 }
 
 export const AuthFetch = new  AuthQuery()
