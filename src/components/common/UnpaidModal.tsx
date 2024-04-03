@@ -39,9 +39,9 @@ export default function UnpaidModal() {
                 <div>
                     <BsFillExclamationTriangleFill className="fill-custom-destructive text-5xl" />
                 </div>
-                <h2 className="font-bold text-lg">Access Denied</h2>
+                <h2 className="text-custom-black dark:text-custom-black font-bold text-lg">Access Denied</h2>
                 <div className="pt-4">
-                    <p className="text-center font-[500]">Please contact the admin to complete your payment.</p>
+                    <p className="text-custom-black dark:text-custom-black text-center font-[500]">Please contact the admin to complete your payment.</p>
                 </div>
                 <TooltipProvider>
                     <Tooltip>
