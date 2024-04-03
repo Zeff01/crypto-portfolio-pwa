@@ -3,16 +3,10 @@ import { PortfolioItem } from "@/types";
 import { safeToFixed } from "@/lib/helpers";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
 import { useFetcher, useNavigate } from "react-router-dom";
+import DeleteCoinContent from "./DeleteCoinContext";
 
 import {
     AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
   
@@ -38,6 +32,22 @@ export default function CoinAccordion({id, coinId, coinImage, coinSymbol, curren
     const navigate = useNavigate()
     const fetcher = useFetcher()
     const deleteCoin = fetcher.submit
+
+    function handleDelete() {
+        if (fetcher.state === 'idle') {
+            deleteCoin(
+                {
+                    type: 'delete_coin',
+                    itemId: id
+                },
+                {
+                    method: 'DELETE',
+                    action: ''   
+                }
+
+            )
+        }
+    }
     
     return (
         <div className="pb-4"
@@ -86,38 +96,7 @@ export default function CoinAccordion({id, coinId, coinImage, coinSymbol, curren
                                         <IoClose className="fill-custom-destructive" />
                                     </div>
                                 </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                    <AlertDialogTitle>Delete {coinSymbol}?</AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        This action cannot be undone. This will delete the coin records from our servers.
-                                    </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction
-                                    disabled={fetcher.state === 'submitting'}
-                                    className="disabled:opacity-60"
-                                    onClick={() => {
-                                        if (fetcher.state === 'idle') {
-                                            deleteCoin(
-                                                {
-                                                    type: 'delete_coin',
-                                                    itemId: id
-                                                },
-                                                {
-                                                    method: 'DELETE',
-                                                    action: ''   
-                                                }
-
-                                            )
-                                        }
-                                    }}
-                                    >
-                                        Continue
-                                    </AlertDialogAction>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
+                                <DeleteCoinContent coinSymbol={coinSymbol} fetcher={fetcher} handleDelete={handleDelete} />
                             </AlertDialog>
                             <div role="button" tabIndex={0} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-2"
                             onClick={() => navigate(`${coinId}`)}

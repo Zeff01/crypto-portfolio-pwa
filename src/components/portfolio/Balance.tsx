@@ -88,22 +88,22 @@ export default function Balance() {
                             <p className="text font-[500]">Balance</p>
                             <div>
                                 <p>
-                                    <span className="text-2xl font-[500]">{safeToFixed(total)}</span>
+                                    <span className="text-2xl font-[500]">{Number(safeToFixed(total)).toLocaleString()}</span>
                                     <span className="text-[10px] text-custom-text">&nbsp;USD</span>
                                 </p>
                                 <p>
-                                    <span className="text-2xl font-[500]">{safeToFixed(phpTotal)}</span>
+                                    <span className="text-2xl font-[500]">{Number(safeToFixed(phpTotal)).toLocaleString()}</span>
                                     <span className="text-[10px] text-custom-text">&nbsp;PHP</span>
                                 </p>
                             </div>
                             <div>
                                     <p className="text font-[500] pt-4 pb-1">Total ROI</p>
                                     <p>
-                                        <span className="text-2xl font-[500]">{safeToFixed(totalRoi)}</span>
+                                        <span className="text-2xl font-[500]">{Number(safeToFixed(totalRoi)).toLocaleString()}</span>
                                         <span className="text-[10px] text-custom-text">USD</span>
                                     </p>
                                     <p>
-                                        <span className="text-2xl font-[500]">{safeToFixed(phpTotalRoi)}</span>
+                                        <span className="text-2xl font-[500]">{Number(safeToFixed(phpTotalRoi)).toLocaleString()}</span>
                                         <span className="text-[10px] text-custom-text">PHP</span>
                                     </p>
                                 </div>
@@ -111,8 +111,8 @@ export default function Balance() {
                             <div className="flex flex-row items-center font-[500] pt-4">
                                 <p className="me-4">Your Budget:</p>
                                 <div className="flex flex-col">
-                                        <p className="text-sm">$ {safeToFixed(budget)} /</p>
-                                        <p className="text-sm">₱ {safeToFixed(phpBudget)}</p>                
+                                        <p className="text-sm">$ {Number(safeToFixed(budget)).toLocaleString()} /</p>
+                                        <p className="text-sm">₱ {Number(safeToFixed(phpBudget)).toLocaleString()}</p>                
                                 </div>
                                 <Button variant={"ghost"} size={"icon"} className="ms-auto border-none hover:bg-transparent active:bg-transparent" onClick={toggleBudgetInput}>
                                     <FaRegEdit className="text-xl" />
