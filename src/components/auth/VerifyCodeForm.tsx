@@ -2,24 +2,38 @@ import { Form, Formik, Field, ErrorMessage } from "formik"
 import * as yup from 'yup'
 import Button from "../common/Button"
 import { useEffect, useState } from "react"
+import { AuthFetch } from "@/queries"
+import { useToast } from "../ui/use-toast"
 
 
 type VerifyCodeFormProps = {
     email?: string;
-    nextStep: () => void;
+    nextStep: (email:string) => void;
 }
 
 const INITIAL_TIME = 5
 export default function VerifyCodeForm({email="", nextStep}:VerifyCodeFormProps) {
+    const {toast} = useToast()
     
     const [timer, setTimer] = useState(INITIAL_TIME) 
+    const [resendLoading, setResendLoading] = useState(false)
 
     function resetTimer() {
         setTimer(INITIAL_TIME)
     }
 
-    function handleResendCode() {
-        resetTimer()
+    async function handleResendCode() {
+        setResendLoading(true)
+        try {
+            const res = await AuthFetch.requestResetPassword(email)
+            if (res.status === 200) {
+                resetTimer()
+            }
+        } catch (error) {
+            console.error('error resending code to email', error)
+        } finally {
+            setResendLoading(false)
+        }
     }
     
 
@@ -33,8 +47,21 @@ export default function VerifyCodeForm({email="", nextStep}:VerifyCodeFormProps)
     })
 
     async function handleSubmit(values:typeof initialValues) {
-        console.log(values)
-        nextStep()
+        const { code } = values
+        try {
+            const res = await AuthFetch.verifyCode(email, code)
+            if (res.status === 200) {                
+                nextStep(email)
+                return
+            }
+            toast({
+                title: 'verify to reset password failed'
+            })
+        } catch (error) {
+            toast({
+                title: 'verify to reset password failed'
+            })
+        }
     }
 
     useEffect(() => {
@@ -73,8 +100,9 @@ export default function VerifyCodeForm({email="", nextStep}:VerifyCodeFormProps)
                                 <Button 
                                 type="button" 
                                 variant={"link"} 
-                                className="text-sm ps-2 py-0 h-fit"
-                                onClick={handleResendCode}
+                                className="text-sm ps-2 py-0 h-fit disabled:opacity-60"
+                                onClick={handleResendCode}                                
+                                disabled={resendLoading}
                                 >
                                     Resend
                                 </Button>

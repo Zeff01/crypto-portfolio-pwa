@@ -1,8 +1,13 @@
 import { Form, Formik, Field, ErrorMessage } from "formik"
 import * as yup from 'yup'
 import Button from "../common/Button"
+import { AuthFetch } from "@/queries"
+import { useNavigate } from "react-router-dom"
+import { useToast } from "../ui/use-toast"
 
 export default function NewPasswordForm({email=""}:{email?:string}) {
+    const navigate = useNavigate()
+    const {toast} = useToast()
     const initialValues = {
         password: '',
         confirmPassword: ''
@@ -16,7 +21,22 @@ export default function NewPasswordForm({email=""}:{email?:string}) {
     })
 
     async function handleSubmit(values:typeof initialValues) {
-        console.log(values)
+        const {password} = values
+        try {
+            const res = await AuthFetch.confirmResetPassword(email, password)
+            if (res.status === 200) {
+                navigate(`/signin?email=${email}`)
+                return
+            }
+            toast({
+                title: 'verify to reset password failed'
+            })
+        } catch (error) {
+            console.error('error creating new password', error)
+            toast({
+                title: 'verify to reset password failed'
+            })
+        }
     }
 
     return (

@@ -1,12 +1,15 @@
 import { Form, Formik, Field, ErrorMessage } from "formik"
 import * as yup from 'yup'
 import Button from "../common/Button"
+import { AuthFetch } from "@/queries"
+import { useToast } from "../ui/use-toast"
 
 type RequestCodeFormProps = {
-    nextStep: () => void;
+    nextStep: (email:string) => void;
 }
 
 export default function RequestCodeForm({nextStep}:RequestCodeFormProps) {
+    const {toast} = useToast()
     const initialValues = {
         email: ''
     }
@@ -16,8 +19,23 @@ export default function RequestCodeForm({nextStep}:RequestCodeFormProps) {
     })
 
     async function handleSubmit(values:typeof initialValues) {
-        console.log(values)
-        nextStep()
+        const {email} = values
+        try {
+            const res = await AuthFetch.requestResetPassword(email)
+            if (res.status === 200) {
+                nextStep(email)
+                return;
+            }
+            toast({
+                title: 'request to reset password failed'
+            })
+        } catch (error) {
+            console.error('error requesting password reset', error)
+            toast({
+                title: 'request to reset password failed'
+            })
+        }
+        
     }
 
     return (

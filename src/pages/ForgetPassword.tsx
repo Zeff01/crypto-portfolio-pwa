@@ -13,9 +13,11 @@ const FormSteps = [ // <-----------------------+
                                              //|
 export default function ForgetPassword() {   //|
     const [step, setStep] = useState(0)      //|
+    const [email, setEmail] = useState('')   //|
                                              //|
     // this determines which form will be shown|
-    function nextStep() {                    //|
+    function nextStep(email:string) {        //|
+        setEmail(email)                      //|
         setStep(s => s+1)                    //|
     }                                        //|
                                              //|
@@ -28,7 +30,8 @@ export default function ForgetPassword() {   //|
                 <h2 className="font-[500]">Crypto Profit</h2>
             </div>
             <CurrentForm 
-            nextStep={nextStep} 
+            nextStep={nextStep}
+            email={email}
             />
             <div className="flex flex-col items-center gap-y-2 text-sm">
                 <Link to="/signup" className=" text-custom-black dark:text-custom-teal">Create an Account Instead</Link>
