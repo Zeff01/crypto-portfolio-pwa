@@ -10,9 +10,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
   manifest:{
-    name:"Crypto Portfolio",
-    short_name:"crypto-portfolio",
-    description:"the best crypto portfolio management app.",
+    name:"Crypto Profit",
+    short_name:"crypto-profit",
+    description:"the best crypto profit management app.",
     icons:[
       {
       src: '/Icon-20x20@1x.png',

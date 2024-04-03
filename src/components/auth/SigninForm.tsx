@@ -8,6 +8,7 @@ import { User, Session } from '@supabase/supabase-js'
 import { AuthFetch } from "@/queries"
 import * as yup from 'yup'
 import { useAuthContext } from "@/providers/AuthProvider"
+import { Link } from "react-router-dom"
 
 export default function SigninForm() {
     const modalTriggerRef =  useRef<HTMLButtonElement>(null)
@@ -64,7 +65,10 @@ export default function SigninForm() {
                             <Field type="password" name="password" className="border-b border-custom-border py-1 px-2 bg-transparent" />
                         </div>    
                         {/* will be implemented in the future */}
-                        <p className="pt-10 text-sm dark:text-custom-text opacity-0">Forgot?</p> 
+                        <p className="mt-10 text-sm dark:text-custom-text">Forgot password?
+                        <Link to="/reset" className="underline ms-2">click here.</Link>
+                        </p> 
+
                         <div className="flex justify-center pt-6">
                             <Button 
                             type="submit" 

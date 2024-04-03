@@ -8,6 +8,7 @@ import Signin from "./pages/Signin"
 import Home from "./pages/Home"
 import Search from "./pages/Search"
 import CoinScreen from "./pages/CoinScreen"
+import ForgotPassword from "./pages/ForgetPassword"
 import RootErrorBoundary from "./components/common/RootErrorBoundary"
 
 // providers
@@ -37,6 +38,7 @@ const router = createBrowserRouter(
             <Route path="" element={<Auth />}>
                 <Route path="signup" element={<Signup />} />
                 <Route path="signin" element={<Signin />} />
+                <Route path="reset" element={<ForgotPassword />} />
             </Route>
             {/* <Route path="test" element={<Test />} /> */}
         </Route>
