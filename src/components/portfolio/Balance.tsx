@@ -109,7 +109,7 @@ export default function Balance() {
                                 </div>
                             
                             <div className="flex flex-row items-center font-[500] pt-4">
-                                <p className="me-4">Your Budget:</p>
+                                <p className="me-2">Your Budget:</p>
                                 <div className="flex flex-col">
                                         <p className="text-sm">$ {Number(safeToFixed(budget)).toLocaleString()} /</p>
                                         <p className="text-sm">₱ {Number(safeToFixed(phpBudget)).toLocaleString()}</p>                

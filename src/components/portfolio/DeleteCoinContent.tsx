@@ -17,7 +17,7 @@ type DeleteCoinContentProps = {
 
 export default function DeleteCoinContent({coinSymbol, fetcher, handleDelete}:DeleteCoinContentProps) {
     return (
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-custom-background dark:bg-custom-darkbackground">
             <AlertDialogHeader>
             <AlertDialogTitle>Delete {coinSymbol}?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -28,7 +28,7 @@ export default function DeleteCoinContent({coinSymbol, fetcher, handleDelete}:De
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
             disabled={fetcher.state === 'submitting'}
-            className="disabled:opacity-60"
+            className="disabled:opacity-60 bg-custom-darkbackground dark:bg-custom-background"
             onClick={handleDelete}
             >
                 Continue

@@ -4,7 +4,7 @@ import { safeToFixed } from "@/lib/helpers";
 import { useNavigate, useFetcher } from "react-router-dom";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
-import DeleteCoinContent from "./DeleteCoinContext";
+import DeleteCoinContent from "./DeleteCoinContent";
 
 import {
     AlertDialog,

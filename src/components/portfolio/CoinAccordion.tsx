@@ -3,7 +3,7 @@ import { PortfolioItem } from "@/types";
 import { safeToFixed } from "@/lib/helpers";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
 import { useFetcher, useNavigate } from "react-router-dom";
-import DeleteCoinContent from "./DeleteCoinContext";
+import DeleteCoinContent from "./DeleteCoinContent";
 
 import {
     AlertDialog,
