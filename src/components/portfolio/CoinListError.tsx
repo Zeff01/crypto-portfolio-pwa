@@ -1,10 +1,19 @@
 import { useNavigate } from "react-router-dom"
 import { Button } from "../ui/button"
 import { usePrevData } from "@/hooks/usePrevData"
+import { useMemo } from "react"
+import { cloneDeep } from "lodash"
 import CoinCard from "./CoinCard"
 import CoinAccordion from "./CoinAccordion"
 
-export default function CoinListError({type}:{type:'card'|'accordion'}) {
+
+type CoinListErrorProps = {
+    listType: 'card'|'accordion';
+    isSorterOpen: boolean;
+    sortBy: 'asc'|'desc'
+
+}
+export default function CoinListError({listType, isSorterOpen, sortBy}:CoinListErrorProps) {
     const navigate =  useNavigate()
     const prevPortfolio = usePrevData(s => s.prevPortfolio)
 
@@ -24,12 +33,22 @@ export default function CoinListError({type}:{type:'card'|'accordion'}) {
         )
     }
 
-    if (type === 'card') {
+    const sortedData = useMemo(() => {
+        const clonedSortedData = cloneDeep(prevPortfolio)
+        .sort((a,b) => (
+            sortBy === 'asc' ? 
+            a.priceChangePercentage - b.priceChangePercentage :
+            b.priceChangePercentage - a.priceChangePercentage
+        ))
+        return clonedSortedData
+        }, [sortBy, prevPortfolio])
+
+    if (listType === 'card') {
         return (
             <>
-                {prevPortfolio.map((p,i) => {
+                {sortedData.map((p,i) => {
                     return (
-                        <CoinCard key={p.id} {...p} index={i} />    
+                        <CoinCard key={p.id} {...p} index={i} isSorterOpen={isSorterOpen}/> 
                     )
                 })}
             </>
@@ -38,9 +57,9 @@ export default function CoinListError({type}:{type:'card'|'accordion'}) {
 
     return (
         <>
-            {prevPortfolio.map((p,i) => {
+            {sortedData.map((p,i) => {
                 return (
-                    <CoinAccordion key={p.id} {...p} index={i} />    
+                    <CoinAccordion key={p.id} {...p} index={i} isSorterOpen={isSorterOpen} />    
                 )
             })}
         </>

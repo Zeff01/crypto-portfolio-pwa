@@ -2,17 +2,45 @@
 import { FaPlus } from "react-icons/fa6";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select"
 
 type ControlsProps = {
     listType: 'card'|'accordion';
     toggleListType():void;
+    sortBy: 'asc'|'desc';
+    changeSort: (value: ControlsProps["sortBy"]) => void;
+    setSorterStatus: (v:boolean) => void;
 }
 
-export default function Controls({listType, toggleListType}:ControlsProps) {
+export default function Controls({listType, toggleListType, sortBy, changeSort, setSorterStatus}:ControlsProps) {
     const navigate = useNavigate()
 
     return (
-        <div className="flex flex-row justify-end gap-x-2">
+        <div className="flex flex-row justify-between">
+              <Select onValueChange={changeSort} onOpenChange={setSorterStatus}>
+                <SelectTrigger className="w-[180px] border-none border-0 py-3 font-[500]">
+                    <SelectValue placeholder="sort" />
+                </SelectTrigger>
+                <SelectContent className="pointer-events-auto font-[500] bg-custom-white dark:bg-custom-card">
+                    <SelectItem value="desc" defaultValue={sortBy}
+                    className="py-3 bg-custom-white dark:bg-custom-card focus:bg-custom-white dark:focus:bg-custom-card"
+                    >
+                        descending
+                    </SelectItem>
+                    <SelectItem value="asc"
+                    className="py-3 bg-custom-white dark:bg-custom-card focus:bg-custom-white dark:focus:bg-custom-card"
+                    >
+                        ascending
+                    </SelectItem>
+                </SelectContent>
+            </Select>
+            <div className="flex flex-row gap-x-2">          
             {
             listType === 'card' ? 
             <Button 
@@ -46,6 +74,7 @@ export default function Controls({listType, toggleListType}:ControlsProps) {
                 <FaPlus className="fill-custom-teal" />
                 <p className="text-sm font-[500]">Add</p>
             </Button>
+            </div>
         </div>
 )
 }

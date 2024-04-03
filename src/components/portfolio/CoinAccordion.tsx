@@ -1,4 +1,5 @@
-import { IoChevronUp, IoChevronDown, IoClose , IoChevronForward } from "react-icons/io5";
+import { IoChevronUp, IoChevronDown } from "react-icons/io5";
+import { RiDeleteBin2Line } from "react-icons/ri";
 import { PortfolioItem } from "@/types";
 import { safeToFixed } from "@/lib/helpers";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
@@ -13,11 +14,21 @@ import {
 
 
 interface CoinAccordionProps extends PortfolioItem {
-    index: number
+    index: number;
+    isSorterOpen: boolean;
 }
 
 
-export default function CoinAccordion({id, coinId, coinImage, coinSymbol, currentPrice, priceChangePercentage, shares}:CoinAccordionProps) {
+export default function CoinAccordion({
+    id, 
+    coinId, 
+    coinImage, 
+    coinSymbol, 
+    currentPrice, 
+    priceChangePercentage, 
+    shares,
+    isSorterOpen,
+}:CoinAccordionProps) {
     const exchangeRate = useExchangeRate(s => s.exchangeRate)
 
     const price = currentPrice < 1 ? currentPrice.toFixed(8) : Number(safeToFixed(currentPrice)).toLocaleString()
@@ -54,10 +65,14 @@ export default function CoinAccordion({id, coinId, coinImage, coinSymbol, curren
         >
             <div>
                 <div className="w-screen pe-8 font-[500] text-sm"> {/**<--- this styles is needed for horizontal scrollbar when overflowing */}
-                    <div className="bg-white dark:bg-custom-card w-full h-full py-4 px-1 flex flex-row gap-x-2 overflow-x-scroll shadow-md rounded-md"
+                    <div className={`
+                    ${{/**this will prevent the weird behavior on mobile view where when i click the <Select> sorter the click event goes through the card*/}}
+                    ${isSorterOpen ? "pointer-events-none" : "pointer-events-auto"}
+                    relative bg-white dark:bg-custom-card w-full h-full py-4 px-2 flex flex-row gap-x-2 overflow-x-scroll shadow-md rounded-md
+                    `}
                     onClick={(e) => {
                         if (e.currentTarget === e.target) {
-                            navigate(`${coinId}`)                                                
+                            navigate(`${coinId}`)
                         }
                     }} 
                     >
@@ -77,7 +92,7 @@ export default function CoinAccordion({id, coinId, coinImage, coinSymbol, curren
                                 <span className="text-[10px] text-custom-text">PHP</span>
                             </p>
                         </div>
-                        <div className="ms-auto flex flex-col justify-between py-3 items-end pointer-events-none">
+                        <div className="ms-auto flex flex-col justify-between py-3 pe-1 items-end pointer-events-none">
                             <p className="text-nowrap">$ {price}</p>
                             <div className={`${priceChangePercentage < 0 ? "text-custom-destructive": "text-custom-teal"} flex flex-row items-center`}>
                             {
@@ -88,22 +103,14 @@ export default function CoinAccordion({id, coinId, coinImage, coinSymbol, curren
                             <p>{safeToFixed(priceChangePercentage)}%</p>
                             </div>
                         </div>
-                        <div className="flex flex-col  justify-between gap-y-2 pe-[2px]">
-                           
-                            <AlertDialog>
-                                <AlertDialogTrigger asChild>
-                                    <div role="button" tabIndex={0} className=" bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-2">
-                                        <IoClose className="fill-custom-destructive" />
-                                    </div>
-                                </AlertDialogTrigger>
-                                <DeleteCoinContent coinSymbol={coinSymbol} fetcher={fetcher} handleDelete={handleDelete} />
-                            </AlertDialog>
-                            <div role="button" tabIndex={0} className="bg-custom-icongray  dark:bg-custom-black rounded-full shadow-sm p-2"
-                            onClick={() => navigate(`${coinId}`)}
-                            >
-                                <IoChevronForward className="stroke-custom-teal" />
-                            </div>
-                        </div>
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild className="absolute top-[2px] right-1 text-md bg-transparent rounded-full shadow-sm p-2">
+                                <div role="button" tabIndex={0}>
+                                    <RiDeleteBin2Line className="fill-custom-destructive" />
+                                </div>
+                            </AlertDialogTrigger>
+                            <DeleteCoinContent coinSymbol={coinSymbol} fetcher={fetcher} handleDelete={handleDelete} />
+                        </AlertDialog>
                     </div>
                 </div>
             </div>

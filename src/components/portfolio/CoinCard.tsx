@@ -13,11 +13,22 @@ import {
 
 interface CoinCardProps extends PortfolioItem  {
     index: number
+    isSorterOpen: boolean;
 } 
 
 
 
-export default function CoinCard( {id, coinId, coinSymbol, currentPrice, priceChangePercentage, index, coinImage, shares}:CoinCardProps) {
+export default function CoinCard({
+    id, 
+    coinId, 
+    coinSymbol, 
+    currentPrice, 
+    priceChangePercentage, 
+    index, 
+    coinImage, 
+    shares, 
+    isSorterOpen
+}:CoinCardProps) {
     const  navigate = useNavigate()
     const exchangeRate = useExchangeRate(s => s.exchangeRate)
 
@@ -46,7 +57,11 @@ export default function CoinCard( {id, coinId, coinSymbol, currentPrice, priceCh
     return (
         <div className={`basis-1/2 pb-2 ${index%2===0?"pe-2":""} overflow-x-scroll`}>
             <div 
-            className="relative bg-custom-white dark:bg-custom-card rounded-lg shadow-md p-4 pr-1 flex flex-col justify-between font-[500] h-[120px]"
+            className={`
+            ${{/**this will prevent the weird behavior on mobile view where when i click the <Select> sorter the click event goes through the card*/}}
+            ${isSorterOpen ? "pointer-events-none" : "pointer-events-auto"}
+            relative bg-custom-white dark:bg-custom-card rounded-lg shadow-md p-4 pr-1 flex flex-col justify-between font-[500] h-[120px]
+            `}
             role="button"
             tabIndex={0}
             onClick={(e) => {
