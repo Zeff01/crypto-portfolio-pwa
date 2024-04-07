@@ -20,7 +20,7 @@ export default function SignupForm() {
         firstName: yup.string().required('*must not be empty'),
         lastName: yup.string().required('*must not be empty'),
         username: yup.string().required('*must not be empty'),
-        email: yup.string().email('*must be a valid email').required('*must not be empty'),
+        email: yup.string().trim().email('*must be a valid email').required('*must not be empty'),
         password: yup.string().min(4, '*minimum of 4 characters').required('must not be empty'),
         confirmPassword: yup.string()
             .oneOf([yup.ref('password')], '*passwords must match')
@@ -31,7 +31,14 @@ export default function SignupForm() {
         email, password, username, firstName, lastName, 
     }:typeof initialValues) {
         try {
-            const res = await AuthFetch.signup({email, password, username, firstName, lastName})
+            const res = await AuthFetch.signup({
+                email:email.trim(), 
+                password, 
+                username: username.trim(), 
+                firstName: firstName.trim(), 
+                lastName: lastName.trim()
+
+            })
             if (res.status == 201) {
                 navigate(`/signin?email=${email}`)
             }
