@@ -98,8 +98,12 @@ export default function CoinScreen() {
                                 variant="ghost" 
                                 className="text-blue-600 dark:text-blue-300 hover:bg-transparent"
                                 onClick={toggleDescription}
-                                >                                    
-                                    Show More
+                                >                 
+                                {
+                                    descExpanded ?
+                                    "Show Less": 
+                                    "Show More"
+                                }                   
                                 </Button>
                                 <Button variant={"ghost"} size={"icon"} className="absolute top-0 left-4  hover:bg-transparent shadow-md rounded-full"
                                 onClick={() => navigate('/portfolio')}
