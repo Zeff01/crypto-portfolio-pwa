@@ -21,7 +21,7 @@ export default function RequestCodeForm({nextStep}:RequestCodeFormProps) {
     async function handleSubmit(values:typeof initialValues) {
         const {email} = values
         try {
-            const res = await AuthFetch.requestResetPassword(email)
+            const res = await AuthFetch.requestResetPassword(email.toLowerCase())
             if (res.status === 200) {
                 nextStep(email)
                 return;
